@@ -13,8 +13,13 @@ import HeroBackground from './components/HeroBackground';
 
 import { PROJECTS_DATA } from './data';
 import { Project } from './types';
+import { useLang } from './contexts/LanguageContext';
+import { useTranslations } from './lib/i18n';
 
 export default function App() {
+  const { lang } = useLang();
+  const tr = useTranslations(lang);
+
   const [currentView, setCurrentView] = useState<'home' | 'blog'>('home');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'ecommerce' | 'services' | 'portfolio' | 'dev'>('all');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
@@ -44,15 +49,15 @@ export default function App() {
       const data = await response.json();
       if (response.ok && data.success) {
         setNewsletterStatus('success');
-        setNewsletterMessage(data.message || 'Pomyślnie zapisano do newslettera!');
+        setNewsletterMessage(data.message || tr.hero.errorServer);
         setNewsletterEmail('');
       } else {
         setNewsletterStatus('error');
-        setNewsletterMessage(data.error || 'Wystąpił błąd podczas zapisu. Spróbuj ponownie.');
+        setNewsletterMessage(data.error || tr.hero.errorServer);
       }
     } catch {
       setNewsletterStatus('error');
-      setNewsletterMessage('Błąd połączenia z serwerem. Spróbuj ponownie później.');
+      setNewsletterMessage(tr.hero.errorServer);
     }
   };
 
@@ -119,10 +124,10 @@ export default function App() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/25 px-4 py-2 rounded font-mono text-xs text-brand cursor-default select-none w-fit"
+                    className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/25 px-4 py-2 rounded-full font-mono text-xs text-brand cursor-default select-none w-fit"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                    <span className="font-semibold uppercase tracking-wider text-[10px]">Marketing · SaaS · Web development</span>
+                    <span className="font-semibold uppercase tracking-wider text-[10px]">{tr.hero.badge}</span>
                   </motion.div>
 
                   {/* Headline */}
@@ -133,7 +138,7 @@ export default function App() {
                     <h1 className="font-sans font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.05]">
                       Igor Chmiel
                       <span className="font-medium text-neutral-400 text-xl sm:text-2xl md:text-3xl block mt-3 leading-relaxed">
-                        Marketing · Start-up&apos;s · SaaS · Web development
+                        {tr.hero.subtitle}
                       </span>
                     </h1>
                   </motion.div>
@@ -144,7 +149,7 @@ export default function App() {
                     transition={{ type: 'spring', stiffness: 45, damping: 24 }}
                     className="text-neutral-400 font-sans text-sm sm:text-base leading-relaxed max-w-lg"
                   >
-                    Tworzę projekty oparte na realnych problemach użytkowników, które przynoszą realne efekty. Sklepy internetowe, aplikacje SaaS, a także backstage z budowania biznesu.
+                    {tr.hero.description}
                   </motion.p>
 
                   {/* Newsletter Form */}
@@ -155,10 +160,11 @@ export default function App() {
                   >
                     <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                       <p className="text-[11px] font-mono font-medium text-neutral-500 tracking-wider uppercase">
-                        Zapisz się — backstage biznesu i SaaS (Zero spamu!):
+                        {tr.hero.newsletterLabel}
                       </p>
-                      <div className="relative flex items-center bg-white/4 border border-white/10 focus-within:border-brand/40 focus-within:bg-white/6 rounded overflow-hidden transition-all duration-300">
-                        <span className="absolute left-3.5 text-neutral-500 pointer-events-none">
+                      {/* pill-shaped input + button */}
+                      <div className="relative flex items-center bg-white/5 border border-white/15 focus-within:border-brand/50 focus-within:bg-white/7 rounded-full overflow-hidden transition-all duration-300 shadow-sm">
+                        <span className="absolute left-4 text-neutral-500 pointer-events-none">
                           <Mail size={14} />
                         </span>
                         <input
@@ -166,24 +172,24 @@ export default function App() {
                           required
                           value={newsletterEmail}
                           onChange={(e) => setNewsletterEmail(e.target.value)}
-                          placeholder="Twój adres e-mail..."
-                          className="w-full pl-10 pr-24 py-3 bg-transparent text-white text-xs placeholder-neutral-600 focus:outline-none font-sans"
+                          placeholder={tr.hero.emailPlaceholder}
+                          className="w-full pl-10 pr-28 py-3 bg-transparent text-white text-xs placeholder-neutral-600 focus:outline-none font-sans"
                           disabled={newsletterStatus === 'loading'}
                         />
                         <button
                           type="submit"
                           disabled={newsletterStatus === 'loading'}
-                          className="absolute right-1.5 px-4 py-1.5 bg-brand text-neutral-950 rounded-sm font-sans font-bold text-[10px] uppercase tracking-wider hover:bg-brand-dark hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 transition-all duration-150 cursor-pointer flex items-center space-x-1"
+                          className="absolute right-1.5 px-4 py-1.5 bg-brand text-neutral-950 rounded-full font-sans font-bold text-[10px] uppercase tracking-wider hover:bg-brand-dark hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 transition-all duration-150 cursor-pointer flex items-center space-x-1"
                         >
                           {newsletterStatus === 'loading' ? (
                             <>
                               <Loader2 size={10} className="animate-spin" />
-                              <span>Zapis...</span>
+                              <span>{tr.hero.joining}</span>
                             </>
                           ) : (
                             <>
                               <Send size={10} />
-                              <span>Dołącz</span>
+                              <span>{tr.hero.joinButton}</span>
                             </>
                           )}
                         </button>
@@ -193,7 +199,7 @@ export default function App() {
                         <motion.div
                           initial={{ opacity: 0, y: -5 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className={`text-[11px] font-medium leading-relaxed px-4 py-1.5 rounded-sm ${
+                          className={`text-[11px] font-medium leading-relaxed px-4 py-2 rounded-full ${
                             newsletterStatus === 'success'
                               ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
                               : 'text-red-400 bg-red-500/10 border border-red-500/20'
@@ -207,21 +213,21 @@ export default function App() {
                   </motion.div>
 
                   {/* Social Links */}
-                  <div className="flex items-center space-x-3.5">
-                    <span className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest select-none font-bold">
-                      Social:
+                  <div className="flex items-center space-x-3">
+                    <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest select-none font-semibold">
+                      {tr.hero.socialLabel}
                     </span>
                     {[
-                      { href: 'https://x.com/IgorChml', icon: <Twitter size={14} />, title: 'X / Twitter' },
-                      { href: 'https://www.instagram.com/igor_chml/', icon: <Instagram size={14} />, title: 'Instagram' },
-                      { href: 'https://www.youtube.com/@Igor_chmiel', icon: <Youtube size={14} />, title: 'YouTube' },
+                      { href: 'https://x.com/IgorChml', icon: <Twitter size={15} />, title: 'X / Twitter' },
+                      { href: 'https://www.instagram.com/igor_chml/', icon: <Instagram size={15} />, title: 'Instagram' },
+                      { href: 'https://www.youtube.com/@Igor_chmiel', icon: <Youtube size={15} />, title: 'YouTube' },
                     ].map((social) => (
                       <a
                         key={social.href}
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-8 h-8 rounded-full border border-white/10 bg-white/4 hover:bg-brand/10 hover:border-brand/30 text-neutral-500 hover:text-brand flex items-center justify-center transition-all duration-200 hover:scale-115"
+                        className="w-9 h-9 rounded-full border border-white/20 bg-white/8 hover:bg-brand/15 hover:border-brand/50 text-neutral-300 hover:text-brand flex items-center justify-center transition-all duration-200 hover:scale-110"
                         title={social.title}
                       >
                         {social.icon}
@@ -236,7 +242,7 @@ export default function App() {
                       className="flex items-center space-x-2 text-neutral-600 hover:text-brand transition-all duration-150 cursor-pointer group"
                     >
                       <ArrowDownCircle size={16} className="animate-bounce group-hover:text-brand transition-colors" />
-                      <span className="font-mono text-[10px] uppercase tracking-widest group-hover:text-brand transition-colors">Przewiń na dół</span>
+                      <span className="font-mono text-[10px] uppercase tracking-widest group-hover:text-brand transition-colors">{tr.hero.scrollCue}</span>
                     </button>
                   </div>
                 </div>
@@ -283,22 +289,22 @@ export default function App() {
             <div className="max-w-7xl mx-auto px-6 space-y-12">
               <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-white/6">
                 <div className="space-y-3">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-600">PORTFOLIO PROJEKTÓW</span>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-600">{tr.projects.sectionTag}</span>
                   <h2 className="text-2xl md:text-3xl font-sans font-extrabold text-white tracking-tight">
-                    Zrealizowane Aplikacje, Witryny & SaaS
+                    {tr.projects.sectionTitle}
                   </h2>
                   <p className="text-xs sm:text-sm text-neutral-500 max-w-xl font-sans leading-relaxed">
-                    Wybierz kategorię, aby odfiltrować projekty marketingowe, e-commerce oraz zaawansowane realizacje deweloperskie i SaaS.
+                    {tr.projects.sectionDesc}
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-2 lg:pt-0" id="project-filters">
                   {[
-                    { id: 'all', label: 'Wszystkie' },
-                    { id: 'dev', label: 'Aplikacje & SaaS' },
-                    { id: 'ecommerce', label: 'Sklepy E-commerce' },
-                    { id: 'services', label: 'Strony Usługowe' },
-                    { id: 'portfolio', label: 'Portfolio i LP' },
+                    { id: 'all', label: tr.projects.filterAll },
+                    { id: 'dev', label: tr.projects.filterDev },
+                    { id: 'ecommerce', label: tr.projects.filterEcommerce },
+                    { id: 'services', label: tr.projects.filterServices },
+                    { id: 'portfolio', label: tr.projects.filterPortfolio },
                   ].map(tab => (
                     <button
                       key={tab.id}
@@ -327,7 +333,7 @@ export default function App() {
 
               {filteredProjects.length === 0 && (
                 <div className="text-center py-20 bg-neutral-900 rounded border border-dashed border-white/10 text-neutral-500 text-sm font-sans">
-                  Brak projektów w wybranej kategorii. Wybierz inną kategorię lub zresetuj filtr.
+                  {tr.projects.empty}
                 </div>
               )}
             </div>
@@ -344,13 +350,13 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-3">
             <BrandLogo className="w-8 h-8" />
-            <span className="text-neutral-500">Igor Chmiel — Marketing, Konsultacje, SaaS & Code</span>
+            <span className="text-neutral-500">{tr.footer.subtitle}</span>
           </div>
 
           <div className="flex flex-wrap gap-6 text-neutral-600">
             <a href="https://igorchmiel.pl" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors font-semibold">igorchmiel.pl</a>
             <a href="mailto:kontakt@igorchmiel.pl" className="hover:text-brand transition-colors font-semibold">E-mail</a>
-            <span>© 2026. Wszystkie prawa zastrzeżone.</span>
+            <span>{tr.footer.rights}</span>
           </div>
         </div>
       </footer>

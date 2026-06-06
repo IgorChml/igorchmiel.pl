@@ -4,6 +4,8 @@ import { Search, Calendar, Clock, ArrowLeft, BookOpen, Tag, ChevronRight, Loader
 import { fetchBlogPosts } from '../lib/contentful';
 import { BLOG_POSTS_DATA } from '../data';
 import { BlogPost } from '../types';
+import { useLang } from '../contexts/LanguageContext';
+import { useTranslations } from '../lib/i18n';
 
 function renderContent(content: string) {
   return content.split('\n\n').map((paragraph, index) => {
@@ -74,6 +76,9 @@ function renderContent(content: string) {
 }
 
 export default function About() {
+  const { lang } = useLang();
+  const tr = useTranslations(lang);
+
   const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS_DATA);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -115,23 +120,23 @@ export default function About() {
             >
               <div className="text-center max-w-2xl mx-auto space-y-4">
                 <div className="inline-flex items-center space-x-2 bg-brand/10 border border-brand/20 px-3 py-1.5 rounded font-mono text-xs text-brand">
-                  <span className="font-semibold uppercase tracking-wider text-[10px]">BAZA WIEDZY & CASE STUDIES</span>
+                  <span className="font-semibold uppercase tracking-wider text-[10px]">{tr.about.tag}</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-white tracking-tight leading-tight">
-                  Artykuły, Analizy i Poradniki
+                  {tr.about.title}
                 </h2>
                 <p className="text-xs sm:text-sm text-neutral-500 font-sans leading-relaxed">
-                  Praktyczne spojrzenie na nowoczesny marketing, tworzenie aplikacji SaaS oraz pozycjonowanie.
+                  {tr.about.subtitle}
                 </p>
               </div>
 
               <div className="flex flex-col md:flex-row gap-4 items-center justify-between pb-6 border-b border-white/6">
                 <div className="flex flex-wrap gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-none">
                   {[
-                    { id: 'all', label: 'Wszystkie wpisy' },
-                    { id: 'marketing', label: 'Marketing & SEO' },
-                    { id: 'saas', label: 'SaaS & Produktywność' },
-                    { id: 'tech', label: 'Development & SaaS' },
+                    { id: 'all', label: tr.about.filterAll },
+                    { id: 'marketing', label: tr.about.filterMarketing },
+                    { id: 'saas', label: tr.about.filterSaas },
+                    { id: 'tech', label: tr.about.filterTech },
                   ].map((cat) => (
                     <button
                       key={cat.id}
@@ -155,7 +160,7 @@ export default function About() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Szukaj artykułów..."
+                    placeholder={tr.about.searchPlaceholder}
                     className="w-full pl-9 pr-4 py-2 border border-white/8 rounded text-xs bg-neutral-900 text-neutral-300 placeholder-neutral-600 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all font-sans"
                   />
                 </div>
@@ -164,7 +169,7 @@ export default function About() {
               {loading ? (
                 <div className="flex items-center justify-center py-24 text-neutral-600">
                   <Loader2 size={20} className="animate-spin mr-2" />
-                  <span className="text-xs font-mono">Ładowanie artykułów...</span>
+                  <span className="text-xs font-mono">{tr.about.loading}</span>
                 </div>
               ) : filteredPosts.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -222,7 +227,7 @@ export default function About() {
                         </div>
 
                         <div className="text-xs font-bold text-brand group-hover:text-white transition-colors flex items-center gap-1 pt-2 border-t border-white/5">
-                          <span>Czytaj artykuł</span>
+                          <span>{tr.about.readArticle}</span>
                           <ChevronRight size={12} className="transition-transform group-hover:translate-x-0.5" />
                         </div>
                       </div>
@@ -233,16 +238,16 @@ export default function About() {
                 <div className="text-center py-20 bg-neutral-900 rounded border border-dashed border-white/10">
                   <div className="max-w-xs mx-auto space-y-4">
                     <BookOpen size={28} className="mx-auto text-neutral-700" />
-                    <p className="text-sm font-bold text-white">Wkrótce pierwsze artykuły</p>
+                    <p className="text-sm font-bold text-white">{tr.about.emptyTitle}</p>
                     <p className="text-xs text-neutral-500 font-sans leading-relaxed">
-                      Sekcja jest w przygotowaniu. Pierwsze wpisy z zakresu marketingu, SaaS i development&apos;u pojawią się wkrótce.
+                      {tr.about.emptyDesc}
                     </p>
                     {(searchQuery || selectedCategory !== 'all') && (
                       <button
                         onClick={() => { setSearchQuery(''); setSelectedCategory('all'); }}
                         className="px-4 py-1.5 bg-brand text-neutral-950 rounded text-xs font-bold hover:bg-brand-dark hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
                       >
-                        Wyzeruj filtry
+                        {tr.about.resetFilters}
                       </button>
                     )}
                   </div>
@@ -266,7 +271,7 @@ export default function About() {
                 className="inline-flex items-center space-x-2 text-neutral-500 hover:text-brand font-sans font-bold text-xs hover:-translate-x-0.5 transition-all duration-150 py-2 cursor-pointer group"
               >
                 <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-                <span>Wróć do listy wszystkich artykułów</span>
+                <span>{tr.about.backToList}</span>
               </button>
 
               <article className="bg-neutral-900 rounded border border-white/8 overflow-hidden p-6 sm:p-10 space-y-6">
@@ -308,9 +313,9 @@ export default function About() {
                     IC
                   </div>
                   <div className="text-center sm:text-left space-y-1">
-                    <p className="text-xs font-bold text-white">O autorze — Igor Chmiel</p>
+                    <p className="text-xs font-bold text-white">{tr.about.authorTitle}</p>
                     <p className="text-[11px] text-neutral-500 font-sans leading-relaxed">
-                      Marketing Manager, programista i niezależny konsultant biznesowy. Łączę techniczne SEO, automatyzację i budowę lejków sprzedażowych dla e-commerce i B2B.
+                      {tr.about.authorDesc}
                     </p>
                   </div>
                 </div>

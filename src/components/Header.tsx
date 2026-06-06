@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Calendar } from 'lucide-react';
+import { Menu, X, Calendar, Globe } from 'lucide-react';
 import BrandLogo from './BrandLogo';
+import { useLang } from '../contexts/LanguageContext';
+import { useTranslations } from '../lib/i18n';
 
 interface HeaderProps {
   currentView: 'home' | 'blog';
@@ -10,6 +12,8 @@ interface HeaderProps {
 export default function Header({ currentView, onViewChange }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { lang, setLang } = useLang();
+  const tr = useTranslations(lang);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,10 +52,10 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
   };
 
   const today = new Date();
-  const formattedDate = today.toLocaleDateString('pl-PL', {
+  const formattedDate = today.toLocaleDateString(lang === 'pl' ? 'pl-PL' : 'en-GB', {
     day: 'numeric',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
   });
 
   return (
@@ -75,18 +79,18 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
             <span className="text-white font-sans font-extrabold tracking-tight text-lg group-hover:text-brand transition-colors">
               Igor Chmiel
             </span>
-            <span className="text-[10px] text-neutral-500 font-mono tracking-widest uppercase leading-none mt-0.5 font-bold">
-              Marketing, Konsultacje & SaaS
+            <span className="text-[10px] text-neutral-500 font-mono tracking-widest uppercase leading-none mt-0.5 font-semibold">
+              {tr.header.subtitle}
             </span>
           </div>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8" id="desktop-nav">
+        <nav className="hidden md:flex items-center space-x-6" id="desktop-nav">
           {[
-            { label: 'Baza wiedzy', id: 'about' },
-            { label: 'Projekty', id: 'projects' },
-            { label: 'Kontakt', id: 'contact' },
+            { label: tr.nav.knowledge, id: 'about' },
+            { label: tr.nav.projects, id: 'projects' },
+            { label: tr.nav.contact, id: 'contact' },
           ].map((item) => (
             <button
               key={item.id}
@@ -109,8 +113,35 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
                 : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            Blog
+            {tr.nav.blog}
           </button>
+
+          {/* Language Toggle */}
+          <div className="flex items-center space-x-1 bg-white/4 border border-white/8 rounded-full px-1 py-1">
+            <Globe size={10} className="text-neutral-600 ml-1.5" />
+            <button
+              onClick={() => setLang('pl')}
+              className={`text-[10px] font-mono font-bold px-2 py-1 rounded-full transition-all duration-150 cursor-pointer ${
+                lang === 'pl'
+                  ? 'bg-brand text-neutral-950'
+                  : 'text-neutral-500 hover:text-white'
+              }`}
+              title="Polski"
+            >
+              PL
+            </button>
+            <button
+              onClick={() => setLang('en')}
+              className={`text-[10px] font-mono font-bold px-2 py-1 rounded-full transition-all duration-150 cursor-pointer ${
+                lang === 'en'
+                  ? 'bg-brand text-neutral-950'
+                  : 'text-neutral-500 hover:text-white'
+              }`}
+              title="English"
+            >
+              EN
+            </button>
+          </div>
 
           <div className="text-[10px] text-neutral-600 font-mono flex items-center bg-white/4 px-2.5 py-1.5 rounded border border-white/8">
             <Calendar size={10} className="mr-1.5 text-neutral-500" />
@@ -119,7 +150,26 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
         </nav>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden flex items-center space-x-3">
+        <div className="md:hidden flex items-center space-x-2">
+          {/* Mobile language toggle */}
+          <div className="flex items-center space-x-0.5 bg-white/4 border border-white/8 rounded-full px-1 py-0.5">
+            <button
+              onClick={() => setLang('pl')}
+              className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full transition-all duration-150 cursor-pointer ${
+                lang === 'pl' ? 'bg-brand text-neutral-950' : 'text-neutral-500'
+              }`}
+            >
+              PL
+            </button>
+            <button
+              onClick={() => setLang('en')}
+              className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full transition-all duration-150 cursor-pointer ${
+                lang === 'en' ? 'bg-brand text-neutral-950' : 'text-neutral-500'
+              }`}
+            >
+              EN
+            </button>
+          </div>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-neutral-400 hover:text-white hover:bg-white/5 p-2 rounded transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer"
@@ -138,9 +188,9 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
         >
           <div className="flex flex-col space-y-4">
             {[
-              { label: 'Baza wiedzy', id: 'about' },
-              { label: 'Projekty', id: 'projects' },
-              { label: 'Kontakt', id: 'contact' },
+              { label: tr.nav.knowledge, id: 'about' },
+              { label: tr.nav.projects, id: 'projects' },
+              { label: tr.nav.contact, id: 'contact' },
             ].map((item) => (
               <button
                 key={item.id}
@@ -160,7 +210,7 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
                 currentView === 'blog' ? 'text-brand' : 'text-neutral-300 hover:text-white'
               }`}
             >
-              <span>Blog</span>
+              <span>{tr.nav.blog}</span>
               {currentView === 'blog' && <span className="w-2 h-2 rounded-full bg-brand" />}
             </button>
 
