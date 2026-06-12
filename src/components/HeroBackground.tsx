@@ -1,7 +1,6 @@
 import React from 'react';
 
-const VIDEO_URL =
-  'https://firebasestorage.googleapis.com/v0/b/image-storage-c04c6.firebasestorage.app/o/wykonaj_t%C4%85_sam%C4%85_czynno%C5%9B%C4%87_dla_t.mp4?alt=media&token=183ccc2e-22d5-4e82-b2a2-f6ee072b88d5';
+const VIDEO_URL = '/videos/animated-hero.mp4';
 
 export default function HeroBackground() {
   return (
