@@ -77,7 +77,7 @@ export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS_DATA);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'marketing' | 'tech' | 'saas'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
@@ -128,9 +128,9 @@ export default function BlogPage() {
                 <div className="flex flex-wrap gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-none">
                   {[
                     { id: 'all', label: 'Wszystkie wpisy' },
-                    { id: 'marketing', label: 'Marketing & SEO' },
-                    { id: 'saas', label: 'SaaS & Produktywność' },
-                    { id: 'tech', label: 'Development & SaaS' },
+                    ...Array.from(
+                      new Map(posts.map(p => [p.category, p.categoryLabel])).entries()
+                    ).map(([id, label]) => ({ id, label })),
                   ].map((cat) => (
                     <button
                       key={cat.id}
