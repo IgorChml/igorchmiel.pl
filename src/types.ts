@@ -35,7 +35,7 @@ export interface BlogPost {
   title: string;
   summary: string;
   content: string;
-  category: 'marketing' | 'tech' | 'saas';
+  category: string;
   categoryLabel: string;
   readTime: string;
   date: string;
