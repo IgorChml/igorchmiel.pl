@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowDownCircle, Mail, Send, Check, Loader2, Twitter, Instagram, Youtube } from 'lucide-react';
+import { ArrowDownCircle, Mail, Send, Check, Loader2, Twitter, Instagram, Youtube, Linkedin, Music } from 'lucide-react';
 
 import Header from './components/Header';
 import About from './components/About';
@@ -221,6 +221,8 @@ export default function App() {
                       { href: 'https://x.com/IgorChml', icon: <Twitter size={15} />, title: 'X / Twitter' },
                       { href: 'https://www.instagram.com/igor_chml/', icon: <Instagram size={15} />, title: 'Instagram' },
                       { href: 'https://www.youtube.com/@Igor_chmiel', icon: <Youtube size={15} />, title: 'YouTube' },
+                      { href: 'https://www.linkedin.com/in/igor-chmiel-%F0%9F%A7%90%E2%98%84%EF%B8%8F-148774232/', icon: <Linkedin size={15} />, title: 'LinkedIn' },
+                      { href: 'https://open.spotify.com/user/9028gykrl8rf8kx84c12jf20f?si=45be1ac791af4424', icon: <Music size={15} />, title: 'Spotify' },
                     ].map((social) => (
                       <a
                         key={social.href}
