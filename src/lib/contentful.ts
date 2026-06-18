@@ -22,12 +22,18 @@ function inlineText(nodes: RtNode[]): string {
     .join('');
 }
 
-function richTextToMarkdown(doc: RtDocument): string {
+function richTextToMarkdown(doc: RtDocument, assetMap: Record<string, string> = {}): string {
   if (!doc?.content) return '';
   const parts: string[] = [];
 
   for (const node of doc.content) {
     switch (node.nodeType) {
+      case 'embedded-asset-block': {
+        const assetId = (node as RtBlock).data?.target?.sys?.id;
+        const url = assetId ? assetMap[assetId] : undefined;
+        if (url) parts.push(`![image](${url})`);
+        break;
+      }
       case 'paragraph': {
         const text = inlineText((node as RtBlock).content).trim();
         if (text) parts.push(text);
@@ -123,7 +129,7 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
 
     return items.map((item): BlogPost => {
       const f        = item.fields;
-      const markdown = f.body ? richTextToMarkdown(f.body as RtDocument) : '';
+      const markdown = f.body ? richTextToMarkdown(f.body as RtDocument, assetMap) : '';
       const summary  = f.body ? richTextToSummary(f.body  as RtDocument) : '';
       const imageId  = f.image?.sys?.id;
 

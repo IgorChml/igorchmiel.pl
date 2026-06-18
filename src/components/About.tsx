@@ -10,6 +10,12 @@ import { useTranslations } from '../lib/i18n';
 function renderContent(content: string) {
   return content.split('\n\n').map((paragraph, index) => {
     const trimmed = paragraph.trim();
+    const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (imgMatch) {
+      return (
+        <img key={index} src={imgMatch[2]} alt={imgMatch[1]} className="w-full rounded-lg my-2" loading="lazy" />
+      );
+    }
     if (trimmed.startsWith('###')) {
       return (
         <h3 key={index} className="text-base sm:text-lg font-extrabold text-white pt-3 pb-1 font-sans border-b border-white/8">
