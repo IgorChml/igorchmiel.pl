@@ -143,7 +143,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               </>
             ) : project.thumbnailImage ? (
-              <img src={project.thumbnailImage} alt={project.title} className="w-full h-full object-cover" />
+              <img src={project.thumbnailImage} alt={project.title} loading="lazy" width={800} height={450} className="w-full h-full object-cover" />
             ) : (
               <div className={`w-full h-full bg-gradient-to-br ${project.thumbnailGradient} flex flex-col items-center justify-center gap-4`}>
                 <div className="text-white/10 font-sans font-bold text-5xl tracking-widest uppercase select-none text-center px-8">

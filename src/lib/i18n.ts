@@ -58,11 +58,11 @@ export const translations = {
         'Marketing Manager, programista i niezależny konsultant biznesowy. Łączę techniczne SEO, automatyzację i budowę lejków sprzedażowych dla e-commerce i B2B.',
     },
     contact: {
-      tag: 'POTRZEBUJESZ STRONY? NAPISZ DO MNIE',
-      title: 'Rozpocznijmy Twój projekt',
+      tag: 'POROZMAWIAJMY O TWOIM PROJEKCIE',
+      title: 'Rozpocznijmy współpracę',
       titleSub: 'już dziś',
       subtitle:
-        'Napisz do mnie – odpowiadam zazwyczaj w ciągu 24 godzin. Porozmawiajmy o darmowej wycenie i stwórzmy stronę, która deklasuje konkurencję.',
+        'Napisz do mnie — odpowiadam zazwyczaj w ciągu 24 godzin. Niezależnie czy potrzebujesz strategii marketingowej, konsultacji B2B, aplikacji SaaS czy strony internetowej.',
       directTitle: 'Metody bezpośrednie',
       emailLabel: 'Adres E-mail',
       portfolioLabel: 'Portfolio online',
@@ -73,7 +73,7 @@ export const translations = {
       emailPlaceholder: 'np. jan@przyklad.pl',
       messageLabel: 'Treść wiadomości',
       messagePlaceholder:
-        'Opisz krótko swój projekt deweloperski, preferowany czas realizacji oraz zakładane funkcjonalności...',
+        'Opisz krótko swój projekt — marketing, konsultacje B2B, SaaS, strona internetowa — oraz preferowany czas realizacji...',
       sendButton: 'Wyślij zapytanie',
       sending: 'Szyfrowanie i wysyłka...',
       successTitle: 'Wiadomość została wysłana pomyślnie!',
@@ -158,11 +158,11 @@ export const translations = {
         'Marketing Manager, developer and independent business consultant. I combine technical SEO, automation and sales funnel building for e-commerce and B2B.',
     },
     contact: {
-      tag: 'NEED A WEBSITE? WRITE TO ME',
-      title: "Let's Start Your Project",
+      tag: "LET'S TALK ABOUT YOUR PROJECT",
+      title: "Let's Start Working Together",
       titleSub: 'today',
       subtitle:
-        "Write to me — I usually reply within 24 hours. Let's discuss a free quote and build a site that outclasses the competition.",
+        "Write to me — I usually reply within 24 hours. Whether you need a marketing strategy, B2B consulting, a SaaS app, or a website.",
       directTitle: 'Direct contact',
       emailLabel: 'Email Address',
       portfolioLabel: 'Online Portfolio',
@@ -173,7 +173,7 @@ export const translations = {
       emailPlaceholder: 'e.g. john@example.com',
       messageLabel: 'Message',
       messagePlaceholder:
-        'Briefly describe your project, preferred timeline and expected features...',
+        'Briefly describe your project — marketing, B2B consulting, SaaS, website — and your preferred timeline...',
       sendButton: 'Send inquiry',
       sending: 'Encrypting & sending...',
       successTitle: 'Message sent successfully!',
