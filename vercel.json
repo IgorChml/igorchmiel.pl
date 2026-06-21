@@ -4,8 +4,9 @@
   "framework": "vite",
   "redirects": [
     {
-      "source": "https://www.igorchmiel.pl/:path*",
-      "destination": "https://igorchmiel.pl/:path*",
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "www.igorchmiel.pl" }],
+      "destination": "https://igorchmiel.pl/:path",
       "permanent": true
     }
   ],
