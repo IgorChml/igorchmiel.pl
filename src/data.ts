@@ -12,8 +12,8 @@ export const PROJECTS_DATA: Project[] = [
     client: 'KociBaits',
     category: 'ecommerce',
     categoryLabel: 'E-commerce',
-    description: 'Responsywna strona e-commerce z systemem płatności i zarządzaniem zamówieniami dedykowana dla wędkarzy karpiowych.',
-    detailedDescription: 'Nowoczesny sklep internetowy stworzony dla renomowanej marki zanęt karpiowych KociBaits. Projekt opiera się na szybkim systemie zakupowym, intuicyjnej nawigacji i elastycznych filtrach wyszukiwania produktów. Wdrożono bezpieczne płatności online oraz automatyczną obsługę procesów magazynowych i logistycznych.',
+    description: 'Responsywna strona e-commerce z systemem płatności i zarządzaniem zamówieniami dedykowana dla wędkarzy karpiowych. Efekt: wzrost konwersji o 45%.',
+    detailedDescription: 'Nowoczesny sklep internetowy stworzony dla renomowanej marki zanęt karpiowych KociBaits. Projekt opiera się na szybkim systemie zakupowym, intuicyjnej nawigacji i elastycznych filtrach wyszukiwania produktów. Wdrożono bezpieczne płatności online oraz automatyczną obsługę procesów magazynowych i logistycznych. Wynik: wzrost współczynnika konwersji o 45% po wdrożeniu nowego sklepu.',
     tags: ['E-commerce', 'WooCommerce', 'Płatności Online', 'UX/UI', 'RWD'],
     localVideo: '/videos/kocibaits.mp4',
     fallbackVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', // beautiful water/lake fishing vibe
@@ -35,8 +35,8 @@ export const PROJECTS_DATA: Project[] = [
     client: 'CML Klimatyzacje',
     category: 'services',
     categoryLabel: 'Strona Usługowa',
-    description: 'Strona dla monterów klimatyzacji zintegrowana z opiniami Google oraz dedykowanym formularzem wyceny.',
-    detailedDescription: 'Profesjonalna platforma wizerunkowa dla firmy CML Klimatyzacje obsługującej Poznań i okoliczne miejscowości. Głównym celem było maksymalne uproszczenie kontaktu i generowanie leadów. Strona zawiera interaktywny formularz darmowej wyceny oraz dynamiczny widget pobierający najnowsze, pięciogwiazdkowe opinie z Google Maps.',
+    description: 'Strona dla monterów klimatyzacji zintegrowana z opiniami Google oraz dedykowanym formularzem wyceny. Efekt: wzrost zapytań o 120%.',
+    detailedDescription: 'Profesjonalna platforma wizerunkowa dla firmy CML Klimatyzacje obsługującej Poznań i okoliczne miejscowości. Głównym celem było maksymalne uproszczenie kontaktu i generowanie leadów. Strona zawiera interaktywny formularz darmowej wyceny oraz dynamiczny widget pobierający najnowsze, pięciogwiazdkowe opinie z Google Maps. Wynik: wzrost liczby zapytań ofertowych o 120% w porównaniu z poprzednią witryną.',
     tags: ['Strona firmowa', 'Lead Generation', 'Google API', 'Kalkulator', 'SEO lokalne'],
     localVideo: '/videos/cml-klimatyzacje.mp4',
     fallbackVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', // clean cooling fan / modern interior breeze

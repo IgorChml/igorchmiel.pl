@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowDownCircle, Mail, Send, Check, Loader2, Twitter, Instagram, Youtube, Linkedin } from 'lucide-react';
+import { ArrowDownCircle, Mail, Send, Check, Loader2, Twitter, Instagram, Youtube, Linkedin, Calendar } from 'lucide-react';
 import { FaSpotify, FaTiktok } from 'react-icons/fa';
 
 import Header from './components/Header';
 import About from './components/About';
+import ServicesSection from './components/ServicesSection';
 import ProjectCard from './components/ProjectCard';
 import ProjectModal from './components/ProjectModal';
 import ContactForm from './components/ContactForm';
+import FAQ from './components/FAQ';
 import BrandLogo from './components/BrandLogo';
 import BlogPage from './components/BlogPage';
 import HeroBackground from './components/HeroBackground';
@@ -34,7 +36,7 @@ export default function App() {
     e.preventDefault();
     if (!newsletterEmail || !newsletterEmail.includes('@')) {
       setNewsletterStatus('error');
-      setNewsletterMessage('Wprowadź prawidłowy adres e-mail.');
+      setNewsletterMessage(tr.hero.errorEmail);
       return;
     }
 
@@ -99,14 +101,11 @@ export default function App() {
             onMouseLeave={handleMouseLeave}
             className="min-h-screen flex items-center justify-center pt-24 pb-16 relative overflow-hidden bg-neutral-950"
           >
-            {/* Animated circuit board canvas */}
             <HeroBackground />
 
             <div className="absolute inset-0 bg-neutral-950/55 z-0 pointer-events-none" />
-            {/* Fade to next section (dark) */}
             <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-transparent z-0 pointer-events-none" />
 
-            {/* Amber glow accent */}
             <motion.div
               animate={{ x: mouseOffset.x * -45, y: mouseOffset.y * -45 }}
               transition={{ type: 'spring', stiffness: 35, damping: 24 }}
@@ -153,64 +152,21 @@ export default function App() {
                     {tr.hero.description}
                   </motion.p>
 
-                  {/* Newsletter Form */}
+                  {/* CTA Button — Calendly */}
                   <motion.div
                     animate={{ x: mouseOffset.x * 4, y: mouseOffset.y * 4 }}
                     transition={{ type: 'spring', stiffness: 48, damping: 25 }}
                     className="w-full max-w-md z-20"
                   >
-                    <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-                      <p className="text-[11px] font-mono font-medium text-neutral-500 tracking-wider uppercase">
-                        {tr.hero.newsletterLabel}
-                      </p>
-                      {/* pill-shaped input + button */}
-                      <div className="relative flex items-center bg-white/5 border border-white/15 focus-within:border-brand/50 focus-within:bg-white/7 rounded-full overflow-hidden transition-all duration-300 shadow-sm">
-                        <span className="absolute left-4 text-neutral-500 pointer-events-none">
-                          <Mail size={14} />
-                        </span>
-                        <input
-                          type="email"
-                          required
-                          value={newsletterEmail}
-                          onChange={(e) => setNewsletterEmail(e.target.value)}
-                          placeholder={tr.hero.emailPlaceholder}
-                          className="w-full pl-10 pr-28 py-3 bg-transparent text-white text-xs placeholder-neutral-600 focus:outline-none font-sans"
-                          disabled={newsletterStatus === 'loading'}
-                        />
-                        <button
-                          type="submit"
-                          disabled={newsletterStatus === 'loading'}
-                          className="absolute right-1.5 px-4 py-1.5 bg-brand text-neutral-950 rounded-full font-sans font-bold text-[10px] uppercase tracking-wider hover:bg-brand-dark hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 transition-all duration-150 cursor-pointer flex items-center space-x-1"
-                        >
-                          {newsletterStatus === 'loading' ? (
-                            <>
-                              <Loader2 size={10} className="animate-spin" />
-                              <span>{tr.hero.joining}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Send size={10} />
-                              <span>{tr.hero.joinButton}</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
-
-                      {newsletterMessage && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className={`text-[11px] font-medium leading-relaxed px-4 py-2 rounded-full ${
-                            newsletterStatus === 'success'
-                              ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
-                              : 'text-red-400 bg-red-500/10 border border-red-500/20'
-                          }`}
-                        >
-                          {newsletterStatus === 'success' && <Check size={11} className="inline mr-1.5 -mt-0.5" />}
-                          {newsletterMessage}
-                        </motion.div>
-                      )}
-                    </form>
+                    <a
+                      href="https://calendly.com/businesschmiel/30min"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2.5 px-6 py-3.5 bg-brand text-neutral-950 rounded-full font-sans font-bold text-xs uppercase tracking-wider hover:bg-brand-dark hover:scale-105 active:scale-95 transition-all duration-150 shadow-md shadow-brand/20"
+                    >
+                      <Calendar size={14} />
+                      <span>{tr.hero.ctaButton}</span>
+                    </a>
                   </motion.div>
 
                   {/* Social Links */}
@@ -242,7 +198,7 @@ export default function App() {
                   {/* Scroll cue */}
                   <div className="hidden sm:block pt-4">
                     <button
-                      onClick={() => scrollTo('projects')}
+                      onClick={() => scrollTo('services')}
                       className="flex items-center space-x-2 text-neutral-600 hover:text-brand transition-all duration-150 cursor-pointer group"
                     >
                       <ArrowDownCircle size={16} className="animate-bounce group-hover:text-brand transition-colors" />
@@ -256,7 +212,6 @@ export default function App() {
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.7, ease: 'easeOut' }}
-                  animate-later={{ x: mouseOffset.x * -12, y: mouseOffset.y * -8 }}
                   className="order-1 md:order-2 flex items-center justify-center md:justify-end"
                 >
                   <motion.div
@@ -264,9 +219,7 @@ export default function App() {
                     transition={{ type: 'spring', stiffness: 35, damping: 22 }}
                     className="relative"
                   >
-                    {/* Amber glow behind image */}
                     <div className="absolute -inset-4 bg-brand/15 rounded-3xl blur-2xl pointer-events-none" />
-                    {/* Subtle amber border */}
                     <div className="absolute -inset-px rounded-2xl border border-brand/20 pointer-events-none" />
 
                     <img
@@ -282,12 +235,14 @@ export default function App() {
             </div>
           </section>
 
+          {/* Services Section */}
+          <ServicesSection />
+
           {/* About / Knowledge base Section */}
           <About />
 
           {/* Projects Section */}
           <section id="projects" className="py-24 bg-neutral-950 border-t border-white/5 relative">
-            {/* Accent lines */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/20 to-transparent" />
 
             <div className="max-w-7xl mx-auto px-6 space-y-12">
@@ -343,6 +298,9 @@ export default function App() {
             </div>
           </section>
 
+          {/* FAQ Section */}
+          <FAQ />
+
           <ContactForm />
         </>
       ) : (
@@ -350,17 +308,73 @@ export default function App() {
       )}
 
       {/* Footer */}
-      <footer className="bg-[#080808] border-t border-white/6 py-12 relative z-10 text-[11px] font-mono text-neutral-600">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center space-x-3">
-            <BrandLogo className="w-8 h-8" />
-            <span className="text-neutral-500">{tr.footer.subtitle}</span>
+      <footer className="bg-[#080808] border-t border-white/6 py-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 space-y-10">
+          {/* Newsletter row */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/6">
+            <div className="space-y-1 text-center md:text-left">
+              <p className="text-sm font-sans font-bold text-white">{tr.newsletter.title}</p>
+              <p className="text-[11px] text-neutral-500 font-sans">{tr.newsletter.desc}</p>
+            </div>
+            <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-2 w-full md:w-auto">
+              <div className="relative flex items-center bg-white/5 border border-white/15 focus-within:border-brand/50 rounded-full overflow-hidden transition-all duration-300 flex-1 md:w-72">
+                <span className="absolute left-3 text-neutral-500 pointer-events-none">
+                  <Mail size={13} />
+                </span>
+                <input
+                  type="email"
+                  required
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  placeholder={tr.newsletter.placeholder}
+                  className="w-full pl-9 pr-4 py-2.5 bg-transparent text-white text-xs placeholder-neutral-600 focus:outline-none font-sans"
+                  disabled={newsletterStatus === 'loading'}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={newsletterStatus === 'loading'}
+                className="px-5 py-2.5 bg-brand text-neutral-950 rounded-full font-sans font-bold text-[10px] uppercase tracking-wider hover:bg-brand-dark hover:scale-105 active:scale-95 disabled:opacity-50 transition-all duration-150 cursor-pointer flex items-center space-x-1 shrink-0"
+              >
+                {newsletterStatus === 'loading' ? (
+                  <>
+                    <Loader2 size={10} className="animate-spin" />
+                    <span>{tr.newsletter.joining}</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={10} />
+                    <span>{tr.newsletter.button}</span>
+                  </>
+                )}
+              </button>
+            </form>
           </div>
 
-          <div className="flex flex-wrap gap-6 text-neutral-600">
-            <a href="https://igorchmiel.pl" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors font-semibold">igorchmiel.pl</a>
-            <a href="mailto:kontakt@igorchmiel.pl" className="hover:text-brand transition-colors font-semibold">E-mail</a>
-            <span>{tr.footer.rights}</span>
+          {newsletterMessage && (
+            <div className={`text-[11px] font-medium leading-relaxed px-4 py-2 rounded-full text-center max-w-md mx-auto ${
+              newsletterStatus === 'success'
+                ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
+                : 'text-red-400 bg-red-500/10 border border-red-500/20'
+            }`}>
+              {newsletterStatus === 'success' && <Check size={11} className="inline mr-1.5 -mt-0.5" />}
+              {newsletterMessage}
+            </div>
+          )}
+
+          {/* Bottom row */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-[11px] font-mono text-neutral-600">
+            <div className="flex items-center space-x-3">
+              <BrandLogo className="w-8 h-8" />
+              <span className="text-neutral-500">{tr.footer.subtitle}</span>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-6 text-neutral-600">
+              <span className="text-neutral-500">{tr.footer.nip}</span>
+              <a href="https://igorchmiel.pl" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors font-semibold">igorchmiel.pl</a>
+              <a href="mailto:kontakt@igorchmiel.pl" className="hover:text-brand transition-colors font-semibold">E-mail</a>
+              <span>{tr.footer.rights}</span>
+            </div>
           </div>
         </div>
       </footer>
