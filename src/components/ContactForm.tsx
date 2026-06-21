@@ -118,6 +118,15 @@ export default function ContactForm() {
                     </a>
                   </div>
                 </div>
+
+                <a
+                  href="https://calendly.com/businesschmiel/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center space-x-2.5 w-full py-3.5 bg-brand hover:bg-brand-dark text-neutral-950 font-sans font-bold text-xs uppercase tracking-wider rounded transition-all duration-150 hover:scale-[1.01] active:scale-[0.99] shadow-md shadow-brand/20"
+                >
+                  <span>{tr.contact.calendlyLabel}</span>
+                </a>
               </div>
             </div>
 
