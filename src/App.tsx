@@ -270,7 +270,7 @@ export default function App() {
                     <div className="absolute -inset-px rounded-2xl border border-brand/20 pointer-events-none" />
 
                     <img
-                      src="/igor-hero.png"
+                      src="/igor-hero.webp"
                       alt="Igor Chmiel — Start Up It!"
                       className="relative w-full max-w-[480px] h-auto object-contain rounded-2xl select-none"
                       draggable={false}

@@ -26,7 +26,7 @@ export const PROJECTS_DATA: Project[] = [
       'Zoptymalizowana ścieżka zakupowa zmniejszająca wskaźnik porzuconych koszyków'
     ],
     thumbnailGradient: 'from-amber-950 to-emerald-950',
-    thumbnailImage: '/projects/kocibaits.png',
+    thumbnailImage: '/projects/kocibaits.webp',
     completedYear: 2024
   },
   {
@@ -49,7 +49,7 @@ export const PROJECTS_DATA: Project[] = [
       'Wyniki prędkości wczytywania bliskie ideałowi na urządzeniach mobilnych'
     ],
     thumbnailGradient: 'from-blue-950 to-cyan-950',
-    thumbnailImage: '/projects/cml-klimatyzacje.png',
+    thumbnailImage: '/projects/cml-klimatyzacje.webp',
     completedYear: 2025
   },
   {
@@ -72,7 +72,7 @@ export const PROJECTS_DATA: Project[] = [
       'Szybki system transakcyjny zabezpieczany protokołem SSL'
     ],
     thumbnailGradient: 'from-purple-950 to-pink-950',
-    thumbnailImage: '/projects/artwall-design.png',
+    thumbnailImage: '/projects/artwall-design.webp',
     completedYear: 2025
   },
   {
@@ -95,7 +95,7 @@ export const PROJECTS_DATA: Project[] = [
       'Animacje ruchu dla podbicia wrażenia luksusu i dopracowania detali'
     ],
     thumbnailGradient: 'from-slate-950 to-slate-800',
-    thumbnailImage: '/projects/igorchmiel.png',
+    thumbnailImage: '/projects/igorchmiel.webp',
     completedYear: 2026
   },
   {
@@ -118,7 +118,7 @@ export const PROJECTS_DATA: Project[] = [
       'Dashboard z podglądem aktywnych projektów i statusem dokumentacji'
     ],
     thumbnailGradient: 'from-blue-950 to-indigo-900',
-    thumbnailImage: '/projects/docbase.png',
+    thumbnailImage: '/projects/docbase.webp',
     completedYear: 2026
   }
 ];

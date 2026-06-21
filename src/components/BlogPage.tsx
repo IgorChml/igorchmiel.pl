@@ -4,6 +4,8 @@ import { Search, Calendar, Clock, ArrowLeft, BookOpen, Tag, ChevronRight, Loader
 import { fetchBlogPosts } from '../lib/contentful';
 import { BLOG_POSTS_DATA } from '../data';
 import { BlogPost } from '../types';
+import { useLang } from '../contexts/LanguageContext';
+import { useTranslations } from '../lib/i18n';
 
 function renderContent(content: string) {
   return content.split('\n\n').map((paragraph, index) => {
@@ -80,6 +82,8 @@ function renderContent(content: string) {
 }
 
 export default function BlogPage() {
+  const { lang } = useLang();
+  const tr = useTranslations(lang);
   const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS_DATA);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -237,16 +241,16 @@ export default function BlogPage() {
                 <div className="text-center py-24 bg-neutral-900 rounded border border-dashed border-white/10">
                   <div className="max-w-sm mx-auto space-y-4">
                     <BookOpen size={28} className="mx-auto text-neutral-700" />
-                    <p className="text-sm font-bold text-white">Wkrótce pierwsze artykuły</p>
+                    <p className="text-sm font-bold text-white">{tr.about.emptyTitle}</p>
                     <p className="text-xs text-neutral-500 font-sans leading-relaxed">
-                      Sekcja jest w przygotowaniu. Pierwsze wpisy z zakresu marketingu, SaaS i development&apos;u pojawią się wkrótce.
+                      {tr.about.emptyDesc}
                     </p>
                     {(searchQuery || selectedCategory !== 'all') && (
                       <button
                         onClick={() => { setSearchQuery(''); setSelectedCategory('all'); }}
                         className="px-4 py-1.5 bg-brand text-neutral-950 rounded text-xs font-bold hover:bg-brand-dark hover:scale-105 active:scale-95 transition-all duration-150 cursor-pointer"
                       >
-                        Zresetuj filtry
+                        {tr.about.resetFilters}
                       </button>
                     )}
                   </div>
