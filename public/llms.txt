@@ -1,9 +1,40 @@
-# igorchmiel.pl — AI Crawler Policy
-# Igor Chmiel — Marketing Manager, B2B Consultant, SaaS Developer
+# Igor Chmiel — Marketing Manager, B2B Consultant & Web Developer
 
-> Igor Chmiel is a Marketing Manager, developer and independent B2B business consultant based in Poland.
-> He specializes in content marketing, technical SEO, sales funnel automation, SaaS development, and web development.
-> Website: https://igorchmiel.pl
-> Contact: kontakt@igorchmiel.pl
-> Languages: Polish, English
-> Services: Content Marketing, B2B Marketing Consulting, Technical SEO, SaaS Development, Web Development
+> Igor Chmiel is an independent Marketing Manager, B2B consultant and web developer based in
+> Poznań, Poland (NIP/Tax ID: 7831897775). He helps small businesses and specialists build
+> websites and client-acquisition systems without agencies — combining marketing strategy with
+> hands-on development. Languages: Polish (primary), English.
+>
+> Igor Chmiel to niezależny Marketing Manager, konsultant B2B i web developer z Poznania
+> (NIP: 7831897775). Pomaga małym firmom i specjalistom budować strony internetowe oraz systemy
+> pozyskiwania klientów bez pośrednictwa agencji — łącząc strategię marketingową z samodzielnym
+> wdrożeniem technicznym.
+
+- Website / Strona: https://igorchmiel.pl
+- Contact / Kontakt: kontakt@igorchmiel.pl
+- Location / Lokalizacja: Poznań, Poland
+- Booking / Konsultacje: https://calendly.com/businesschmiel/30min
+
+## About / O mnie
+- [O mnie — Igor Chmiel](https://igorchmiel.pl/o-mnie): Biografia, obszary specjalizacji, sposób pracy.
+
+## Services / Usługi
+- [Content Marketing B2B](https://igorchmiel.pl/uslugi/content-marketing): Strategia treści, artykuły blogowe, social media, lead magnety. Wzrost ruchu organicznego o 80–140% w 6 miesięcy.
+- [Konsultacje Marketingowe B2B](https://igorchmiel.pl/uslugi/marketing-b2b): Audyt marketingu, definicja ICP, budowa lejków sprzedażowych i lead generation. Od 200 PLN/h.
+- [Techniczne SEO](https://igorchmiel.pl/uslugi/seo): Audyt Core Web Vitals, dane strukturalne JSON-LD, optymalizacja indeksacji. Wyniki 95+ w Google Lighthouse.
+- [Strony Internetowe i Web Development](https://igorchmiel.pl/uslugi/web-development): React, Next.js, TypeScript, Tailwind CSS — strony i aplikacje od zera. Od 3 000 PLN.
+
+## Portfolio / Realizacje
+- [Portfolio](https://igorchmiel.pl/portfolio): Pełna lista realizacji w 4 kategoriach (Aplikacje & SaaS, E-commerce, Strony Usługowe, Portfolio i Landing Page).
+- [Sklep internetowy Kocibaits](https://igorchmiel.pl/portfolio/kocibaits): E-commerce WooCommerce, wzrost konwersji o 45%.
+- [CML Klimatyzacje](https://igorchmiel.pl/portfolio/cml-klimatyzacje): Strona usługowa z formularzem wyceny, wzrost zapytań o 120%.
+- [ArtWall Design](https://igorchmiel.pl/portfolio/artwall-design): Sklep internetowy z autorskimi plakatami.
+- [Portfolio Igor Chmiel](https://igorchmiel.pl/portfolio/igorchmiel-portfolio): Strona portfolio i oferta dla małych firm.
+- [DocBase SaaS](https://igorchmiel.pl/portfolio/docbase-saas): Aplikacja SaaS do dokumentacji projektowej zarządzanej przez AI.
+
+## Blog
+- [Blog](https://igorchmiel.pl/blog): Praktyczne artykuły o content marketingu, SEO, SaaS i pozyskiwaniu klientów B2B.
+
+## Policy
+- AI search/answer crawlers (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended) are welcome to read and cite this content.
+- Training-only / bulk-scraping crawlers (CCBot, cohere-ai, Bytespider) are disallowed — see /robots.txt.

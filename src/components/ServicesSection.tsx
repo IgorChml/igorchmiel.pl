@@ -1,11 +1,21 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Briefcase, PenTool, Search, Code2, Globe } from 'lucide-react';
+import Link from 'next/link';
+import { Briefcase, PenTool, Search, Code2, Globe, ArrowRight } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';
 import { useTranslations } from '../lib/i18n';
 
 const SERVICE_ICONS = [PenTool, Briefcase, Search, Code2, Globe];
+// Aligned by index with translations.services.items. SaaS (idx 3) has no
+// dedicated page yet, so it stays a non-linked card.
+const SERVICE_HREFS: (string | null)[] = [
+  '/uslugi/content-marketing',
+  '/uslugi/marketing-b2b',
+  '/uslugi/seo',
+  null,
+  '/uslugi/web-development',
+];
 
 export default function ServicesSection() {
   const { lang } = useLang();
@@ -31,6 +41,8 @@ export default function ServicesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tr.services.items.map((service, idx) => {
             const Icon = SERVICE_ICONS[idx];
+            const href = SERVICE_HREFS[idx];
+            const moreLabel = lang === 'pl' ? 'Dowiedz się więcej' : 'Learn more';
             return (
               <motion.div
                 key={idx}
@@ -38,13 +50,22 @@ export default function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: idx * 0.08 }}
-                className="bg-neutral-900 border border-white/8 rounded p-6 space-y-4 hover:border-brand/25 transition-all duration-300 group"
+                className="bg-neutral-900 border border-white/8 rounded p-6 space-y-4 hover:border-brand/25 transition-all duration-300 group flex flex-col"
               >
                 <div className="w-10 h-10 rounded bg-brand/10 border border-brand/20 flex items-center justify-center text-brand group-hover:bg-brand/20 transition-colors">
                   <Icon size={18} />
                 </div>
                 <h3 className="text-base font-sans font-bold text-white">{service.title}</h3>
-                <p className="text-xs text-neutral-500 font-sans leading-relaxed">{service.desc}</p>
+                <p className="text-xs text-neutral-500 font-sans leading-relaxed flex-1">{service.desc}</p>
+                {href && (
+                  <Link
+                    href={href}
+                    className="inline-flex items-center gap-1.5 text-xs font-sans font-bold text-brand hover:text-white transition-colors pt-2"
+                  >
+                    {moreLabel}
+                    <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                )}
               </motion.div>
             );
           })}

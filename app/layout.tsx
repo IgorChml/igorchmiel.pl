@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     canonical: 'https://igorchmiel.pl/',
     languages: {
       'pl': 'https://igorchmiel.pl/',
+      'en': 'https://igorchmiel.pl/',
       'x-default': 'https://igorchmiel.pl/',
     },
   },
@@ -50,7 +51,10 @@ const jsonLd = {
       '@id': 'https://igorchmiel.pl/#person',
       name: 'Igor Chmiel',
       url: 'https://igorchmiel.pl/',
+      mainEntityOfPage: 'https://igorchmiel.pl/o-mnie',
+      image: 'https://igorchmiel.pl/igor-hero.webp',
       email: 'kontakt@igorchmiel.pl',
+      taxID: '7831897775',
       jobTitle: 'Marketing Manager i Konsultant B2B',
       description: 'Marketing Manager, programista i niezależny konsultant biznesowy. Specjalizacja: content marketing, B2B, techniczne SEO, SaaS, web development.',
       knowsLanguage: ['pl', 'en'],
@@ -78,7 +82,28 @@ const jsonLd = {
       name: 'Igor Chmiel — Marketing & Web Development',
       provider: { '@id': 'https://igorchmiel.pl/#person' },
       url: 'https://igorchmiel.pl/',
-      areaServed: { '@type': 'Country', name: 'Poland' },
+      image: 'https://igorchmiel.pl/igor-hero.webp',
+      logo: 'https://igorchmiel.pl/logo.png',
+      email: 'kontakt@igorchmiel.pl',
+      taxID: '7831897775',
+      priceRange: 'od 200 PLN',
+      currenciesAccepted: 'PLN',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Poznań',
+        addressRegion: 'wielkopolskie',
+        addressCountry: 'PL',
+      },
+      areaServed: [
+        { '@type': 'Country', name: 'Poland' },
+        { '@type': 'City', name: 'Poznań' },
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'kontakt@igorchmiel.pl',
+        contactType: 'sales',
+        availableLanguage: ['pl', 'en'],
+      },
       availableChannel: {
         '@type': 'ServiceChannel',
         serviceUrl: 'https://igorchmiel.pl/',
@@ -99,53 +124,6 @@ const jsonLd = {
   ],
 };
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'Dla jakich firm pracujesz?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Pracuję głównie z małymi firmami, freelancerami i specjalistami, którzy chcą zbudować profesjonalną obecność online i system pozyskiwania klientów — bez pośredników i agencji. Obsługuję branże B2B, e-commerce, SaaS, usługi lokalne i firmy technologiczne.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Jak wygląda współpraca krok po kroku?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Zaczynamy od bezpłatnej konsultacji (30 min), na której poznaję Twoje cele i wyzwania. Następnie przygotowuję propozycję zakresu prac i wycenę. Po akceptacji realizuję projekt etapami z regularnymi aktualizacjami. Na koniec wdrażam rozwiązanie i zapewniam wsparcie powdrożeniowe.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Ile kosztują Twoje usługi?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Ceny zależą od zakresu projektu. Strony internetowe zaczynam od 3 000 PLN, konsultacje marketingowe od 200 PLN/h, a projekty SaaS wyceniam indywidualnie. Bezpłatna konsultacja pomoże określić budżet dopasowany do Twoich potrzeb.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Ile trwa typowy projekt?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Strona internetowa: 2–4 tygodnie. Strategia marketingowa: 1–2 tygodnie na audyt i plan + bieżąca realizacja. MVP aplikacji SaaS: 4–8 tygodni. Dokładny harmonogram ustalimy na konsultacji.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Czy pomagasz firmom bez budżetu na reklamę?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Tak — specjalizuję się w strategiach organicznych: content marketing, SEO, social media i budowa lejka sprzedażowego opartego na treściach. Wiele moich klientów generuje leady bez wydawania na płatne reklamy.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Co odróżnia Cię od agencji marketingowych?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Pracujesz bezpośrednio ze mną — bez account managerów, bez juniorów, bez ukrytych kosztów. Łączę kompetencje marketingowe z technicznymi (koduję, wdrażam, optymalizuję). Szybsza komunikacja, niższe koszty i pełna transparentność.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Jak mierzysz efekty działań marketingowych?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Śledzę konkretne KPI: ruch organiczny, pozycje w Google, współczynnik konwersji, liczbę leadów, koszt pozyskania klienta (CAC) i wartość życiową klienta (LTV). Raportuję miesięcznie z rekomendacjami na kolejny okres.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Czy pracujesz zdalnie?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Tak, 100% moich projektów realizuję zdalnie. Komunikuję się przez e-mail, Slack, Google Meet lub inne narzędzia, które preferujesz. Jestem dostępny w godzinach 9:00–17:00 CET.' },
-    },
-  ],
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pl">
@@ -156,10 +134,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
       <body className="bg-neutral-950 text-neutral-100 selection:bg-brand selection:text-neutral-950 antialiased overflow-x-hidden">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ServicePageLayout from '../../../src/components/ServicePageLayout';
+import { breadcrumbJsonLd, JsonLd } from '../../../src/lib/jsonld';
 
 export const metadata: Metadata = {
   title: 'Content Marketing B2B — Strategia Treści dla Firm',
@@ -7,6 +8,11 @@ export const metadata: Metadata = {
     'Tworzę strategie content marketingowe dla firm B2B — artykuły blogowe, posty social media, kalendarz publikacji. Konsultant content marketingu z Poznania. Wzrost ruchu organicznego o 80-140% w 6 miesięcy.',
   alternates: {
     canonical: 'https://igorchmiel.pl/uslugi/content-marketing',
+    languages: {
+      pl: 'https://igorchmiel.pl/uslugi/content-marketing',
+      en: 'https://igorchmiel.pl/uslugi/content-marketing',
+      'x-default': 'https://igorchmiel.pl/uslugi/content-marketing',
+    },
   },
   openGraph: {
     title: 'Content Marketing B2B — Strategia Treści dla Firm | Igor Chmiel',
@@ -103,6 +109,12 @@ export default function ContentMarketingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Usługi', path: '/uslugi/content-marketing' },
+          { name: 'Content Marketing B2B', path: '/uslugi/content-marketing' },
+        ])}
+      />
       <ServicePageLayout
         title="Content Marketing B2B — Strategia Treści dla Firm"
         subtitle="Content Marketing B2B"
@@ -111,6 +123,8 @@ export default function ContentMarketingPage() {
         process={process}
         faq={faq}
         iconName="PenTool"
+        priceFrom="Wycena indywidualna"
+        priceNote="Miesięczne pakiety contentowe dopasowane do zakresu i branży"
       />
     </>
   );

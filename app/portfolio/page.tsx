@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { PROJECTS_DATA } from '../../src/data';
+import { breadcrumbJsonLd, JsonLd } from '../../src/lib/jsonld';
 
 export const metadata: Metadata = {
   title: 'Portfolio — Realizacje i Case Study | Igor Chmiel',
@@ -10,6 +11,11 @@ export const metadata: Metadata = {
     'Zobacz moje realizacje: sklepy internetowe, strony firmowe, aplikacje webowe i kampanie marketingowe dla firm B2B. Case study z wynikami.',
   alternates: {
     canonical: 'https://igorchmiel.pl/portfolio',
+    languages: {
+      pl: 'https://igorchmiel.pl/portfolio',
+      en: 'https://igorchmiel.pl/portfolio',
+      'x-default': 'https://igorchmiel.pl/portfolio',
+    },
   },
   openGraph: {
     title: 'Portfolio — Realizacje i Case Study | Igor Chmiel',
@@ -31,14 +37,22 @@ const CATEGORIES: { id: string; label: string }[] = [
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ItemList',
+  '@type': 'CollectionPage',
   name: 'Portfolio — Igor Chmiel',
-  itemListElement: PROJECTS_DATA.map((project, idx) => ({
-    '@type': 'ListItem',
-    position: idx + 1,
-    url: `https://igorchmiel.pl/portfolio/${project.id}`,
-    name: project.title,
-  })),
+  description:
+    'Realizacje: sklepy internetowe, strony firmowe, aplikacje webowe i kampanie marketingowe dla firm B2B.',
+  url: 'https://igorchmiel.pl/portfolio',
+  inLanguage: 'pl',
+  isPartOf: { '@id': 'https://igorchmiel.pl/#website' },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: PROJECTS_DATA.map((project, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      url: `https://igorchmiel.pl/portfolio/${project.id}`,
+      name: project.title,
+    })),
+  },
 };
 
 export default function PortfolioPage() {
@@ -48,6 +62,7 @@ export default function PortfolioPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Portfolio', path: '/portfolio' }])} />
       <main className="bg-neutral-950 text-white">
         <section className="pt-32 pb-20">
           <div className="max-w-6xl mx-auto px-6 space-y-16">

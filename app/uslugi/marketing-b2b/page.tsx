@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ServicePageLayout from '../../../src/components/ServicePageLayout';
+import { breadcrumbJsonLd, JsonLd } from '../../../src/lib/jsonld';
 
 export const metadata: Metadata = {
   title: 'Konsultacje Marketingowe B2B — Strategia i Lejek Sprzedażowy',
@@ -7,6 +8,11 @@ export const metadata: Metadata = {
     'Konsultant marketingowy B2B z Poznania. Doradztwo marketingowe, budowa lejków sprzedażowych, strategia lead generation i audyt działań marketingowych dla firm usługowych, SaaS i e-commerce.',
   alternates: {
     canonical: 'https://igorchmiel.pl/uslugi/marketing-b2b',
+    languages: {
+      pl: 'https://igorchmiel.pl/uslugi/marketing-b2b',
+      en: 'https://igorchmiel.pl/uslugi/marketing-b2b',
+      'x-default': 'https://igorchmiel.pl/uslugi/marketing-b2b',
+    },
   },
   openGraph: {
     title: 'Konsultacje Marketingowe B2B — Strategia i Lejek Sprzedażowy | Igor Chmiel',
@@ -94,6 +100,13 @@ const jsonLd = {
   areaServed: { '@type': 'Country', name: 'Poland' },
   serviceType: 'B2B Marketing Consulting',
   url: 'https://igorchmiel.pl/uslugi/marketing-b2b',
+  offers: {
+    '@type': 'Offer',
+    price: '200',
+    priceCurrency: 'PLN',
+    description: 'Stawka godzinowa konsultacji marketingowych B2B',
+    url: 'https://igorchmiel.pl/uslugi/marketing-b2b',
+  },
 };
 
 export default function MarketingB2BPage() {
@@ -103,6 +116,12 @@ export default function MarketingB2BPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Usługi', path: '/uslugi/marketing-b2b' },
+          { name: 'Konsultacje Marketingowe B2B', path: '/uslugi/marketing-b2b' },
+        ])}
+      />
       <ServicePageLayout
         title="Konsultacje Marketingowe B2B — Strategia i Lejek Sprzedażowy"
         subtitle="Konsultant Marketingowy B2B"
@@ -111,6 +130,8 @@ export default function MarketingB2BPage() {
         process={process}
         faq={faq}
         iconName="Briefcase"
+        priceFrom="od 200 PLN / h"
+        priceNote="Konsultacje i doradztwo — pakiety projektowe wyceniane indywidualnie"
       />
     </>
   );

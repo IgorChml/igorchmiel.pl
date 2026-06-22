@@ -36,6 +36,8 @@ interface ServicePageLayoutProps {
   process: ProcessStep[];
   faq: FaqItem[];
   iconName: string;
+  priceFrom?: string;
+  priceNote?: string;
 }
 
 export default function ServicePageLayout({
@@ -46,6 +48,8 @@ export default function ServicePageLayout({
   process,
   faq,
   iconName,
+  priceFrom,
+  priceNote,
 }: ServicePageLayoutProps) {
   const Icon = iconMap[iconName] || PenTool;
   const { lang } = useLang();
@@ -81,6 +85,16 @@ export default function ServicePageLayout({
           <p className="text-sm sm:text-base text-neutral-400 font-sans leading-relaxed max-w-2xl mx-auto">
             {description}
           </p>
+          {priceFrom && (
+            <div className="flex flex-col items-center gap-1 pt-2">
+              <p className="text-2xl sm:text-3xl font-sans font-extrabold text-white">
+                {priceFrom}
+              </p>
+              {priceNote && (
+                <p className="text-xs text-neutral-500 font-sans">{priceNote}</p>
+              )}
+            </div>
+          )}
           <a
             href="https://calendly.com/businesschmiel/30min"
             target="_blank"
