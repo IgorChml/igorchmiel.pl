@@ -21,67 +21,114 @@ export const metadata: Metadata = {
   },
 };
 
+const CATEGORIES: { id: string; label: string }[] = [
+  { id: 'dev', label: 'Aplikacje & SaaS' },
+  { id: 'ecommerce', label: 'Sklepy E-commerce' },
+  { id: 'services', label: 'Strony Usługowe' },
+  { id: 'portfolio', label: 'Portfolio i Landing Page' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Portfolio — Igor Chmiel',
+  itemListElement: PROJECTS_DATA.map((project, idx) => ({
+    '@type': 'ListItem',
+    position: idx + 1,
+    url: `https://igorchmiel.pl/portfolio/${project.id}`,
+    name: project.title,
+  })),
+};
+
 export default function PortfolioPage() {
   return (
-    <main className="bg-neutral-950 text-white">
-      <section className="pt-32 pb-20">
-        <div className="max-w-6xl mx-auto px-6 space-y-12">
-          <div className="text-center space-y-4">
-            <p className="text-xs sm:text-sm text-brand font-semibold uppercase tracking-wider">
-              Portfolio
-            </p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-extrabold tracking-tight">
-              Moje realizacje
-            </h1>
-            <p className="text-sm text-neutral-400 font-sans leading-relaxed max-w-2xl mx-auto">
-              Wybrane projekty z zakresu web developmentu, e-commerce i marketingu B2B.
-            </p>
-          </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="bg-neutral-950 text-white">
+        <section className="pt-32 pb-20">
+          <div className="max-w-6xl mx-auto px-6 space-y-16">
+            <div className="text-center space-y-4">
+              <p className="text-xs sm:text-sm text-brand font-semibold uppercase tracking-wider">
+                Portfolio
+              </p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-extrabold tracking-tight">
+                Moje realizacje
+              </h1>
+              <p className="text-sm text-neutral-400 font-sans leading-relaxed max-w-2xl mx-auto">
+                Wybrane projekty z zakresu web developmentu, e-commerce i marketingu B2B —
+                pogrupowane według kategorii. Kliknij projekt, aby zobaczyć pełne case study.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {PROJECTS_DATA.map((project) => (
-              <Link
-                key={project.id}
-                href={`/portfolio/${project.id}`}
-                className="group bg-neutral-900 border border-white/8 rounded overflow-hidden hover:border-brand/25 transition-all duration-300"
-              >
-                <div
-                  className={`h-40 bg-gradient-to-br ${project.thumbnailGradient} flex items-center justify-center`}
-                >
-                  <span className="text-white/30 text-xs font-mono">{project.categoryLabel}</span>
-                </div>
-                <div className="p-6 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-brand font-semibold uppercase tracking-wider">
-                      {project.categoryLabel} · {project.completedYear}
+            {CATEGORIES.map((category) => {
+              const projects = PROJECTS_DATA.filter((p) => p.category === category.id);
+              if (projects.length === 0) return null;
+
+              return (
+                <div key={category.id} className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <h2 className="text-lg sm:text-xl font-sans font-extrabold text-white tracking-tight">
+                      {category.label}
+                    </h2>
+                    <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+                    <span className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest">
+                      {projects.length}
                     </span>
-                    <ArrowRight
-                      size={14}
-                      className="text-neutral-600 group-hover:text-brand transition-colors"
-                    />
                   </div>
-                  <h2 className="text-sm font-sans font-bold text-white group-hover:text-brand transition-colors">
-                    {project.title}
-                  </h2>
-                  <p className="text-xs text-neutral-500 font-sans leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] text-neutral-500 bg-neutral-800 px-2 py-0.5 rounded"
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {projects.map((project) => (
+                      <Link
+                        key={project.id}
+                        href={`/portfolio/${project.id}`}
+                        className="group bg-neutral-900 border border-white/8 rounded overflow-hidden hover:border-brand/25 transition-all duration-300"
                       >
-                        {tag}
-                      </span>
+                        <div
+                          className={`h-40 bg-gradient-to-br ${project.thumbnailGradient} flex items-center justify-center`}
+                        >
+                          <span className="text-white/30 text-xs font-mono">
+                            {project.categoryLabel}
+                          </span>
+                        </div>
+                        <div className="p-6 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] text-brand font-semibold uppercase tracking-wider">
+                              {project.categoryLabel} · {project.completedYear}
+                            </span>
+                            <ArrowRight
+                              size={14}
+                              className="text-neutral-600 group-hover:text-brand transition-colors"
+                            />
+                          </div>
+                          <h3 className="text-sm font-sans font-bold text-white group-hover:text-brand transition-colors">
+                            {project.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 font-sans leading-relaxed line-clamp-2">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-1.5 pt-1">
+                            {project.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="text-[10px] text-neutral-500 bg-neutral-800 px-2 py-0.5 rounded"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </>
   );
 }

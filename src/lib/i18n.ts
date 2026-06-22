@@ -4,9 +4,17 @@ export const translations = {
   pl: {
     nav: {
       knowledge: 'Baza wiedzy',
+      services: 'Usługi',
       projects: 'Projekty',
+      portfolio: 'Portfolio',
       contact: 'Kontakt',
       blog: 'Blog',
+      servicesMenu: [
+        { label: 'Content Marketing', href: '/uslugi/content-marketing' },
+        { label: 'Konsultacje Marketingowe B2B', href: '/uslugi/marketing-b2b' },
+        { label: 'Techniczne SEO', href: '/uslugi/seo' },
+        { label: 'Strony Internetowe', href: '/uslugi/web-development' },
+      ],
     },
     header: {
       subtitle: 'Marketing, Konsultacje & SaaS',
@@ -106,6 +114,7 @@ export const translations = {
       filterServices: 'Strony Usługowe',
       filterPortfolio: 'Portfolio i LP',
       empty: 'Brak projektów w wybranej kategorii. Wybierz inną kategorię lub zresetuj filtr.',
+      seeAll: 'Zobacz wszystkie',
     },
     about: {
       tag: 'BAZA WIEDZY & CASE STUDIES',
@@ -177,9 +186,17 @@ export const translations = {
   en: {
     nav: {
       knowledge: 'Knowledge Base',
+      services: 'Services',
       projects: 'Projects',
+      portfolio: 'Portfolio',
       contact: 'Contact',
       blog: 'Blog',
+      servicesMenu: [
+        { label: 'Content Marketing', href: '/uslugi/content-marketing' },
+        { label: 'B2B Marketing Consulting', href: '/uslugi/marketing-b2b' },
+        { label: 'Technical SEO', href: '/uslugi/seo' },
+        { label: 'Websites', href: '/uslugi/web-development' },
+      ],
     },
     header: {
       subtitle: 'Marketing, Consulting & SaaS',
@@ -279,6 +296,7 @@ export const translations = {
       filterServices: 'Service Sites',
       filterPortfolio: 'Portfolio & LP',
       empty: 'No projects in this category. Choose another category or reset the filter.',
+      seeAll: 'See all',
     },
     about: {
       tag: 'KNOWLEDGE BASE & CASE STUDIES',
