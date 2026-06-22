@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Lang } from '../lib/i18n';
 
@@ -13,22 +15,20 @@ const LanguageContext = createContext<LanguageContextType>({
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
-    // First, check for explicit user preference saved in localStorage
+    if (typeof window === 'undefined') return 'pl';
     try {
       const saved = localStorage.getItem('preferred-lang') as Lang | null;
       if (saved === 'pl' || saved === 'en') return saved;
     } catch {}
-    return 'pl'; // default before geo detection finishes
+    return 'pl';
   });
 
   useEffect(() => {
-    // Skip geo detection if user already has an explicit preference
     try {
       const saved = localStorage.getItem('preferred-lang');
       if (saved === 'pl' || saved === 'en') return;
     } catch {}
 
-    // Detect country via free IP geolocation API
     fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) })
       .then((r) => r.json())
       .then((data: { country_code?: string }) => {
@@ -36,7 +36,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         setLangState(detected);
       })
       .catch(() => {
-        // Fallback: use browser language
         const browserLang = navigator.language?.toLowerCase();
         if (browserLang && !browserLang.startsWith('pl')) {
           setLangState('en');

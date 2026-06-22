@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'motion/react';
 import { Briefcase, PenTool, Search, Code2, Globe } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';

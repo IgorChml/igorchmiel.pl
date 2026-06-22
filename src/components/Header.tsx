@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Calendar, Globe } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { useLang } from '../contexts/LanguageContext';
 import { useTranslations } from '../lib/i18n';
 
-interface HeaderProps {
-  currentView: 'home' | 'blog';
-  onViewChange: (view: 'home' | 'blog') => void;
-}
-
-export default function Header({ currentView, onViewChange }: HeaderProps) {
+export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { lang, setLang } = useLang();
   const tr = useTranslations(lang);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isHome = pathname === '/';
+  const isBlog = pathname.startsWith('/blog');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -28,27 +30,19 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
     if (element) {
       const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      const elementPosition = element.getBoundingClientRect().top - bodyRect;
+      window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
     }
   };
 
   const handleNavSelect = (id: string) => {
     setIsMobileMenuOpen(false);
-    if (currentView !== 'home') {
-      onViewChange('home');
+    if (!isHome) {
+      router.push('/');
       setTimeout(() => scrollToSection(id), 150);
     } else {
       scrollToSection(id);
     }
-  };
-
-  const handleLogoClick = () => {
-    setIsMobileMenuOpen(false);
-    onViewChange('home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const today = new Date();
@@ -68,9 +62,9 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <div
-          onClick={handleLogoClick}
+        <Link
+          href="/"
+          onClick={() => { setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="flex items-center space-x-3 cursor-pointer group"
           id="logo-container"
         >
@@ -83,9 +77,8 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
               {tr.header.subtitle}
             </span>
           </div>
-        </div>
+        </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6" id="desktop-nav">
           {[
             { label: tr.nav.knowledge, id: 'about' },
@@ -101,30 +94,23 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
             </button>
           ))}
 
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onViewChange('blog');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className={`font-sans font-semibold text-sm transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer px-3 py-1.5 rounded ${
-              currentView === 'blog'
+          <Link
+            href="/blog"
+            className={`font-sans font-semibold text-sm transition-all hover:scale-105 active:scale-95 duration-150 px-3 py-1.5 rounded ${
+              isBlog
                 ? 'bg-brand text-neutral-950 shadow-sm shadow-brand/30'
                 : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             {tr.nav.blog}
-          </button>
+          </Link>
 
-          {/* Language Toggle */}
           <div className="flex items-center space-x-1 bg-white/4 border border-white/8 rounded-full px-1 py-1">
             <Globe size={10} className="text-neutral-600 ml-1.5" />
             <button
               onClick={() => setLang('pl')}
               className={`text-[10px] font-mono font-bold px-2 py-1 rounded-full transition-all duration-150 cursor-pointer ${
-                lang === 'pl'
-                  ? 'bg-brand text-neutral-950'
-                  : 'text-neutral-500 hover:text-white'
+                lang === 'pl' ? 'bg-brand text-neutral-950' : 'text-neutral-500 hover:text-white'
               }`}
               title="Polski"
             >
@@ -133,9 +119,7 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
             <button
               onClick={() => setLang('en')}
               className={`text-[10px] font-mono font-bold px-2 py-1 rounded-full transition-all duration-150 cursor-pointer ${
-                lang === 'en'
-                  ? 'bg-brand text-neutral-950'
-                  : 'text-neutral-500 hover:text-white'
+                lang === 'en' ? 'bg-brand text-neutral-950' : 'text-neutral-500 hover:text-white'
               }`}
               title="English"
             >
@@ -149,9 +133,7 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
           </div>
         </nav>
 
-        {/* Mobile Hamburger */}
         <div className="md:hidden flex items-center space-x-2">
-          {/* Mobile language toggle */}
           <div className="flex items-center space-x-0.5 bg-white/4 border border-white/8 rounded-full px-1 py-0.5">
             <button
               onClick={() => setLang('pl')}
@@ -180,7 +162,6 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile Menu Panel */}
       {isMobileMenuOpen && (
         <div
           id="mobile-menu-panel"
@@ -200,19 +181,16 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
                 {item.label}
               </button>
             ))}
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                onViewChange('blog');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+            <Link
+              href="/blog"
+              onClick={() => setIsMobileMenuOpen(false)}
               className={`text-left font-sans font-bold text-sm py-2 transition-colors border-b border-white/6 flex justify-between items-center ${
-                currentView === 'blog' ? 'text-brand' : 'text-neutral-300 hover:text-white'
+                isBlog ? 'text-brand' : 'text-neutral-300 hover:text-white'
               }`}
             >
               <span>{tr.nav.blog}</span>
-              {currentView === 'blog' && <span className="w-2 h-2 rounded-full bg-brand" />}
-            </button>
+              {isBlog && <span className="w-2 h-2 rounded-full bg-brand" />}
+            </Link>
 
             <div className="text-[10px] text-neutral-600 font-mono text-center pt-2">
               {formattedDate}
