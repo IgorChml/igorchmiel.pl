@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ServicePageLayout from '../../../src/components/ServicePageLayout';
+import { breadcrumbJsonLd, JsonLd } from '../../../src/lib/jsonld';
 
 export const metadata: Metadata = {
   title: 'Strony Internetowe i Aplikacje Web — React, Next.js, Tailwind',
@@ -7,6 +8,11 @@ export const metadata: Metadata = {
     'Tworzę szybkie strony internetowe i aplikacje web w React, Next.js i Tailwind CSS — bez szablonów, od zera pod Twoją markę. Web dev freelancer z Poznania. Wdrożenie na Vercel z SSL i CDN.',
   alternates: {
     canonical: 'https://igorchmiel.pl/uslugi/web-development',
+    languages: {
+      pl: 'https://igorchmiel.pl/uslugi/web-development',
+      en: 'https://igorchmiel.pl/uslugi/web-development',
+      'x-default': 'https://igorchmiel.pl/uslugi/web-development',
+    },
   },
   openGraph: {
     title: 'Strony Internetowe i Aplikacje Web — React, Next.js, Tailwind | Igor Chmiel',
@@ -94,6 +100,13 @@ const jsonLd = {
   areaServed: { '@type': 'Country', name: 'Poland' },
   serviceType: 'Web Development',
   url: 'https://igorchmiel.pl/uslugi/web-development',
+  offers: {
+    '@type': 'Offer',
+    price: '3000',
+    priceCurrency: 'PLN',
+    description: 'Cena początkowa projektu strony internetowej',
+    url: 'https://igorchmiel.pl/uslugi/web-development',
+  },
 };
 
 export default function WebDevelopmentPage() {
@@ -103,6 +116,12 @@ export default function WebDevelopmentPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Usługi', path: '/uslugi/web-development' },
+          { name: 'Strony Internetowe', path: '/uslugi/web-development' },
+        ])}
+      />
       <ServicePageLayout
         title="Strony Internetowe i Aplikacje Web — React, Next.js, Tailwind"
         subtitle="Web Development Freelancer"
@@ -111,6 +130,8 @@ export default function WebDevelopmentPage() {
         process={process}
         faq={faq}
         iconName="Globe"
+        priceFrom="od 3 000 PLN"
+        priceNote="Jednorazowa wycena projektu — zależna od zakresu i funkcjonalności"
       />
     </>
   );

@@ -19,6 +19,7 @@ export default function Header() {
   const router = useRouter();
 
   const isHome = pathname === '/';
+  const isAbout = pathname === '/o-mnie';
   const isBlog = pathname.startsWith('/blog');
   const isServices = pathname.startsWith('/uslugi');
   const isPortfolio = pathname.startsWith('/portfolio');
@@ -84,12 +85,14 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6" id="desktop-nav">
-          <button
-            onClick={() => handleNavSelect('about')}
-            className="font-sans font-semibold text-sm text-neutral-400 hover:text-white transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer"
+          <Link
+            href="/o-mnie"
+            className={`font-sans font-semibold text-sm transition-all hover:scale-105 active:scale-95 duration-150 ${
+              isAbout ? 'text-brand' : 'text-neutral-400 hover:text-white'
+            }`}
           >
-            {tr.nav.knowledge}
-          </button>
+            {tr.nav.about}
+          </Link>
 
           {/* Services dropdown */}
           <div
@@ -223,12 +226,16 @@ export default function Header() {
           className="md:hidden absolute top-full left-0 right-0 bg-neutral-950 border-b border-white/8 py-6 px-6 shadow-2xl animate-fade-in"
         >
           <div className="flex flex-col space-y-4">
-            <button
-              onClick={() => handleNavSelect('about')}
-              className="text-left text-neutral-300 hover:text-white font-sans font-bold text-sm py-2 transition-colors border-b border-white/6"
+            <Link
+              href="/o-mnie"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-left font-sans font-bold text-sm py-2 transition-colors border-b border-white/6 flex justify-between items-center ${
+                isAbout ? 'text-brand' : 'text-neutral-300 hover:text-white'
+              }`}
             >
-              {tr.nav.knowledge}
-            </button>
+              <span>{tr.nav.about}</span>
+              {isAbout && <span className="w-2 h-2 rounded-full bg-brand" />}
+            </Link>
 
             {/* Services accordion */}
             <div className="border-b border-white/6">

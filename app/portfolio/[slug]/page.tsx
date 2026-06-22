@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ArrowLeft, ArrowRight, ExternalLink, Tag } from 'lucide-react';
 import { PROJECTS_DATA } from '../../../src/data';
 import type { Project } from '../../../src/types';
+import { breadcrumbJsonLd, JsonLd } from '../../../src/lib/jsonld';
 
 export function generateStaticParams() {
   return PROJECTS_DATA.map((project) => ({
@@ -28,6 +29,11 @@ export async function generateMetadata({
     description: project.detailedDescription || project.description,
     alternates: {
       canonical: `https://igorchmiel.pl/portfolio/${project.id}`,
+      languages: {
+        pl: `https://igorchmiel.pl/portfolio/${project.id}`,
+        en: `https://igorchmiel.pl/portfolio/${project.id}`,
+        'x-default': `https://igorchmiel.pl/portfolio/${project.id}`,
+      },
     },
     openGraph: {
       title: `${project.title} | Portfolio — Igor Chmiel`,
@@ -60,13 +66,15 @@ export default async function ProjectPage({
     name: project.title,
     description: project.detailedDescription || project.description,
     url: `https://igorchmiel.pl/portfolio/${project.id}`,
-    author: {
-      '@type': 'Person',
-      name: 'Igor Chmiel',
-      url: 'https://igorchmiel.pl',
-    },
-    dateCreated: `${project.completedYear}`,
+    author: { '@id': 'https://igorchmiel.pl/#person' },
+    dateCreated: `${project.completedYear}-01-01`,
+    datePublished: `${project.completedYear}-01-01`,
+    inLanguage: 'pl',
+    ...(project.thumbnailImage
+      ? { image: `https://igorchmiel.pl${project.thumbnailImage}` }
+      : {}),
     keywords: project.tags.join(', '),
+    about: project.categoryLabel,
   };
 
   return (
@@ -74,6 +82,12 @@ export default async function ProjectPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Portfolio', path: '/portfolio' },
+          { name: project.title, path: `/portfolio/${project.id}` },
+        ])}
       />
       <main className="bg-neutral-950 text-white">
         {/* Hero */}

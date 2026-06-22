@@ -109,6 +109,12 @@ export default function Footer() {
 
           <div className="flex flex-wrap justify-center gap-6 text-neutral-600">
             <span className="text-neutral-500">{tr.footer.nip}</span>
+            <Link href="/o-mnie" className="hover:text-brand transition-colors font-semibold">
+              {lang === 'pl' ? 'O mnie' : 'About'}
+            </Link>
+            <Link href="/portfolio" className="hover:text-brand transition-colors font-semibold">
+              Portfolio
+            </Link>
             <Link href="/polityka-prywatnosci" className="hover:text-brand transition-colors font-semibold">
               {tr.footer.privacy}
             </Link>

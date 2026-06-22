@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ServicePageLayout from '../../../src/components/ServicePageLayout';
+import { breadcrumbJsonLd, JsonLd } from '../../../src/lib/jsonld';
 
 export const metadata: Metadata = {
   title: 'Techniczne SEO — Audyt, Optymalizacja i Pozycjonowanie',
@@ -7,6 +8,11 @@ export const metadata: Metadata = {
     'Techniczne SEO i audyt SEO dla firm B2B. Optymalizacja Core Web Vitals, dane strukturalne JSON-LD, architektura linkowania i pozycjonowanie. Wyniki 95+ w Google Lighthouse.',
   alternates: {
     canonical: 'https://igorchmiel.pl/uslugi/seo',
+    languages: {
+      pl: 'https://igorchmiel.pl/uslugi/seo',
+      en: 'https://igorchmiel.pl/uslugi/seo',
+      'x-default': 'https://igorchmiel.pl/uslugi/seo',
+    },
   },
   openGraph: {
     title: 'Techniczne SEO — Audyt, Optymalizacja i Pozycjonowanie | Igor Chmiel',
@@ -103,6 +109,12 @@ export default function SeoPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Usługi', path: '/uslugi/seo' },
+          { name: 'Techniczne SEO', path: '/uslugi/seo' },
+        ])}
+      />
       <ServicePageLayout
         title="Techniczne SEO — Audyt, Optymalizacja i Pozycjonowanie"
         subtitle="Techniczne SEO i Pozycjonowanie B2B"
@@ -111,6 +123,8 @@ export default function SeoPage() {
         process={process}
         faq={faq}
         iconName="Search"
+        priceFrom="Wycena indywidualna"
+        priceNote="Audyt techniczny i optymalizacja wyceniane wg zakresu serwisu"
       />
     </>
   );

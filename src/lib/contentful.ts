@@ -111,6 +111,39 @@ function estimateReadTime(text: string): string {
   return `${mins} min czytania`;
 }
 
+// ── Parse a raw Contentful entries response into BlogPost[] ──────────
+export function parseEntries(data: any): BlogPost[] {
+  const items: any[] = data?.items || [];
+
+  // Build asset id → URL map from includes
+  const assetMap: Record<string, string> = {};
+  for (const asset of data?.includes?.Asset ?? []) {
+    const url: string = asset.fields?.file?.url ?? '';
+    if (url) assetMap[asset.sys.id] = url.startsWith('//') ? `https:${url}` : url;
+  }
+
+  return items.map((item): BlogPost => {
+    const f        = item.fields;
+    const markdown = f.body ? richTextToMarkdown(f.body as RtDocument, assetMap) : '';
+    const summary  = f.body ? richTextToSummary(f.body  as RtDocument) : '';
+    const imageId  = f.image?.sys?.id;
+
+    return {
+      id:            item.sys.id,
+      slug:          item.sys.id,
+      title:         f.title ?? 'Bez tytułu',
+      summary,
+      content:       markdown,
+      category:      (f.category as string) || 'tech',
+      categoryLabel: (f.categoryLabel as string) || f.category || 'Development & SaaS',
+      readTime:      estimateReadTime(markdown),
+      date:          formatDate(item.sys.createdAt),
+      imageUrl:      imageId ? (assetMap[imageId] ?? '') : '',
+      isoDate:       item.sys.createdAt,
+    };
+  });
+}
+
 // ── Main fetch — calls our Express proxy, token stays server-side ──
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
   try {
@@ -118,34 +151,7 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
     if (!res.ok) return [];
 
     const data = await res.json();
-    const items: any[] = data.items || [];
-
-    // Build asset id → URL map from includes
-    const assetMap: Record<string, string> = {};
-    for (const asset of data.includes?.Asset ?? []) {
-      const url: string = asset.fields?.file?.url ?? '';
-      if (url) assetMap[asset.sys.id] = url.startsWith('//') ? `https:${url}` : url;
-    }
-
-    return items.map((item): BlogPost => {
-      const f        = item.fields;
-      const markdown = f.body ? richTextToMarkdown(f.body as RtDocument, assetMap) : '';
-      const summary  = f.body ? richTextToSummary(f.body  as RtDocument) : '';
-      const imageId  = f.image?.sys?.id;
-
-      return {
-        id:            item.sys.id,
-        slug:          item.sys.id,
-        title:         f.title ?? 'Bez tytułu',
-        summary,
-        content:       markdown,
-        category:      (f.category as string) || 'tech',
-        categoryLabel: (f.categoryLabel as string) || f.category || 'Development & SaaS',
-        readTime:      estimateReadTime(markdown),
-        date:          formatDate(item.sys.createdAt),
-        imageUrl:      imageId ? (assetMap[imageId] ?? '') : '',
-      };
-    });
+    return parseEntries(data);
   } catch (err) {
     console.error('fetchBlogPosts error:', err);
     return [];
