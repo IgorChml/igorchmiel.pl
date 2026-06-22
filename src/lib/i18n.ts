@@ -4,6 +4,7 @@ export const translations = {
   pl: {
     nav: {
       knowledge: 'Baza wiedzy',
+      about: 'O mnie',
       services: 'Usługi',
       projects: 'Projekty',
       portfolio: 'Portfolio',
@@ -186,6 +187,7 @@ export const translations = {
   en: {
     nav: {
       knowledge: 'Knowledge Base',
+      about: 'About',
       services: 'Services',
       projects: 'Projects',
       portfolio: 'Portfolio',
