@@ -1,7 +1,10 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Search, Calendar, Clock, ArrowLeft, BookOpen, Tag, ChevronRight, Loader2 } from 'lucide-react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { fetchBlogPosts } from '../lib/contentful';
 import { BLOG_POSTS_DATA } from '../data';
 import { BlogPost } from '../types';
@@ -82,17 +85,27 @@ function renderContent(content: string) {
   });
 }
 
-function BlogPostReader({ posts, loading }: { posts: BlogPost[]; loading: boolean }) {
-  const { slug } = useParams<{ slug: string }>();
+export function BlogPostReader({ slug }: { slug: string }) {
   const { lang } = useLang();
   const tr = useTranslations(lang);
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const post = posts.find(p => p.slug === slug || p.id === slug);
+  const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS_DATA);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBlogPosts()
+      .then((fetched) => {
+        if (fetched.length > 0) setPosts(fetched);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [slug]);
+
+  const post = posts.find(p => p.slug === slug || p.id === slug);
 
   if (loading) {
     return (
@@ -108,7 +121,7 @@ function BlogPostReader({ posts, loading }: { posts: BlogPost[]; loading: boolea
       <div className="text-center py-24">
         <BookOpen size={28} className="mx-auto text-neutral-700 mb-4" />
         <p className="text-sm font-bold text-white mb-2">{lang === 'pl' ? 'Artykuł nie został znaleziony' : 'Article not found'}</p>
-        <Link to="/blog" className="text-xs text-brand hover:text-white transition-colors font-bold">
+        <Link href="/blog" className="text-xs text-brand hover:text-white transition-colors font-bold">
           {tr.about.backToList}
         </Link>
       </div>
@@ -123,7 +136,7 @@ function BlogPostReader({ posts, loading }: { posts: BlogPost[]; loading: boolea
       className="max-w-3xl mx-auto space-y-8"
     >
       <button
-        onClick={() => navigate('/blog')}
+        onClick={() => router.push('/blog')}
         className="inline-flex items-center space-x-2 text-neutral-500 hover:text-brand font-sans font-bold text-xs hover:-translate-x-0.5 transition-all duration-150 py-2 cursor-pointer group"
       >
         <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
@@ -180,11 +193,21 @@ function BlogPostReader({ posts, loading }: { posts: BlogPost[]; loading: boolea
   );
 }
 
-function BlogList({ posts, loading }: { posts: BlogPost[]; loading: boolean }) {
+export function BlogList() {
   const { lang } = useLang();
   const tr = useTranslations(lang);
+  const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS_DATA);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  useEffect(() => {
+    fetchBlogPosts()
+      .then((fetched) => {
+        if (fetched.length > 0) setPosts(fetched);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
@@ -267,7 +290,7 @@ function BlogList({ posts, loading }: { posts: BlogPost[]; loading: boolean }) {
               transition={{ duration: 0.3, delay: idx * 0.05 }}
             >
               <Link
-                to={`/blog/${post.slug}`}
+                href={`/blog/${post.slug}`}
                 className="bg-neutral-900 rounded border border-white/8 overflow-hidden hover:border-brand/25 hover:shadow-lg hover:shadow-brand/5 transition-all duration-300 flex flex-col cursor-pointer group hover:scale-[1.01] h-full block"
               >
                 <div className="h-48 overflow-hidden relative bg-neutral-800 border-b border-white/6">
@@ -340,31 +363,5 @@ function BlogList({ posts, loading }: { posts: BlogPost[]; loading: boolean }) {
         </div>
       )}
     </motion.div>
-  );
-}
-
-export default function BlogPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS_DATA);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchBlogPosts()
-      .then((fetched) => {
-        if (fetched.length > 0) setPosts(fetched);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] pt-28 pb-20 font-sans">
-      <div className="max-w-7xl mx-auto px-6">
-        {slug ? (
-          <BlogPostReader posts={posts} loading={loading} />
-        ) : (
-          <BlogList posts={posts} loading={loading} />
-        )}
-      </div>
-    </div>
   );
 }

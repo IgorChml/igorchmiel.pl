@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, Pause, Volume2, VolumeX, X, ExternalLink, Calendar, CheckSquare, Layers, RefreshCw, Image } from 'lucide-react';

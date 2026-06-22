@@ -1,7 +1,9 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Calendar, Clock, BookOpen, Tag, ChevronRight, Loader2, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { fetchBlogPosts } from '../lib/contentful';
 import { BLOG_POSTS_DATA } from '../data';
 import { BlogPost } from '../types';
@@ -45,7 +47,7 @@ export default function About() {
 
           {latestPosts.length > 0 && (
             <Link
-              to="/blog"
+              href="/blog"
               className="inline-flex items-center space-x-2 px-5 py-2.5 bg-white/5 border border-white/10 hover:border-brand/30 hover:bg-white/8 rounded text-xs font-sans font-bold text-neutral-300 hover:text-white transition-all duration-200 group shrink-0"
             >
               <span>{tr.about.filterAll}</span>
@@ -70,7 +72,7 @@ export default function About() {
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
               >
                 <Link
-                  to={`/blog/${post.slug}`}
+                  href={`/blog/${post.slug}`}
                   className="bg-neutral-900 rounded border border-white/8 overflow-hidden hover:border-brand/25 hover:shadow-lg hover:shadow-brand/5 transition-all duration-300 flex flex-col cursor-pointer group hover:scale-[1.01] h-full block"
                 >
                   <div className="h-40 overflow-hidden relative bg-neutral-800 border-b border-white/6">

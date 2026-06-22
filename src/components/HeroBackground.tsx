@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 const VIDEO_URL = '/videos/animated-hero.mp4';

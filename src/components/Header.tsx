@@ -1,5 +1,8 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Calendar, Globe } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { useLang } from '../contexts/LanguageContext';
@@ -10,11 +13,11 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { lang, setLang } = useLang();
   const tr = useTranslations(lang);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const isHome = location.pathname === '/';
-  const isBlog = location.pathname.startsWith('/blog');
+  const isHome = pathname === '/';
+  const isBlog = pathname.startsWith('/blog');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -35,7 +38,7 @@ export default function Header() {
   const handleNavSelect = (id: string) => {
     setIsMobileMenuOpen(false);
     if (!isHome) {
-      navigate('/');
+      router.push('/');
       setTimeout(() => scrollToSection(id), 150);
     } else {
       scrollToSection(id);
@@ -60,7 +63,7 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link
-          to="/"
+          href="/"
           onClick={() => { setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="flex items-center space-x-3 cursor-pointer group"
           id="logo-container"
@@ -92,7 +95,7 @@ export default function Header() {
           ))}
 
           <Link
-            to="/blog"
+            href="/blog"
             className={`font-sans font-semibold text-sm transition-all hover:scale-105 active:scale-95 duration-150 px-3 py-1.5 rounded ${
               isBlog
                 ? 'bg-brand text-neutral-950 shadow-sm shadow-brand/30'
@@ -179,7 +182,7 @@ export default function Header() {
               </button>
             ))}
             <Link
-              to="/blog"
+              href="/blog"
               onClick={() => setIsMobileMenuOpen(false)}
               className={`text-left font-sans font-bold text-sm py-2 transition-colors border-b border-white/6 flex justify-between items-center ${
                 isBlog ? 'text-brand' : 'text-neutral-300 hover:text-white'
