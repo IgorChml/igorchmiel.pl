@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
 import { PROJECTS_DATA } from '../data';
@@ -11,12 +13,9 @@ import { useTranslations } from '../lib/i18n';
 export default function ProjectsSection() {
   const { lang } = useLang();
   const tr = useTranslations(lang);
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'ecommerce' | 'services' | 'portfolio' | 'dev'>('all');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
-  const filteredProjects = selectedCategory === 'all'
-    ? PROJECTS_DATA
-    : PROJECTS_DATA.filter(p => p.category === selectedCategory);
+  const featuredProjects = PROJECTS_DATA.slice(0, 2);
 
   return (
     <>
@@ -35,31 +34,17 @@ export default function ProjectsSection() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-2 lg:pt-0" id="project-filters">
-              {[
-                { id: 'all', label: tr.projects.filterAll },
-                { id: 'dev', label: tr.projects.filterDev },
-                { id: 'ecommerce', label: tr.projects.filterEcommerce },
-                { id: 'services', label: tr.projects.filterServices },
-                { id: 'portfolio', label: tr.projects.filterPortfolio },
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setSelectedCategory(tab.id as any)}
-                  className={`px-4 py-2 rounded text-xs font-sans font-bold border transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer ${
-                    selectedCategory === tab.id
-                      ? 'bg-brand text-neutral-950 border-brand shadow-md shadow-brand/20'
-                      : 'bg-white/4 text-neutral-400 border-white/8 hover:border-brand/30 hover:text-white'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 shrink-0 px-5 py-2.5 rounded text-xs font-sans font-bold border border-white/8 bg-white/4 text-neutral-300 hover:border-brand/30 hover:text-brand transition-all hover:scale-105 active:scale-95 duration-150"
+            >
+              {tr.projects.seeAll}
+              <ArrowRight size={14} />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" id="projects-grid">
-            {filteredProjects.map(proj => (
+            {featuredProjects.map(proj => (
               <ProjectCard
                 key={proj.id}
                 project={proj}
@@ -68,11 +53,15 @@ export default function ProjectsSection() {
             ))}
           </div>
 
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-20 bg-neutral-900 rounded border border-dashed border-white/10 text-neutral-500 text-sm font-sans">
-              {tr.projects.empty}
-            </div>
-          )}
+          <div className="flex justify-center pt-2">
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded text-sm font-sans font-bold bg-brand text-neutral-950 hover:bg-brand/90 transition-all hover:scale-105 active:scale-95 duration-150 shadow-md shadow-brand/20"
+            >
+              {tr.projects.seeAll}
+              <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </section>
 

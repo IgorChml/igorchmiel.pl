@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, Calendar, Globe } from 'lucide-react';
+import { Menu, X, Calendar, Globe, ChevronDown } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import { useLang } from '../contexts/LanguageContext';
 import { useTranslations } from '../lib/i18n';
@@ -11,6 +11,8 @@ import { useTranslations } from '../lib/i18n';
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const { lang, setLang } = useLang();
   const tr = useTranslations(lang);
   const pathname = usePathname();
@@ -18,6 +20,8 @@ export default function Header() {
 
   const isHome = pathname === '/';
   const isBlog = pathname.startsWith('/blog');
+  const isServices = pathname.startsWith('/uslugi');
+  const isPortfolio = pathname.startsWith('/portfolio');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -80,19 +84,70 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6" id="desktop-nav">
-          {[
-            { label: tr.nav.knowledge, id: 'about' },
-            { label: tr.nav.projects, id: 'projects' },
-            { label: tr.nav.contact, id: 'contact' },
-          ].map((item) => (
+          <button
+            onClick={() => handleNavSelect('about')}
+            className="font-sans font-semibold text-sm text-neutral-400 hover:text-white transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer"
+          >
+            {tr.nav.knowledge}
+          </button>
+
+          {/* Services dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => setIsServicesOpen(true)}
+            onMouseLeave={() => setIsServicesOpen(false)}
+          >
             <button
-              key={item.id}
-              onClick={() => handleNavSelect(item.id)}
-              className="font-sans font-semibold text-sm text-neutral-400 hover:text-white transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer"
+              onClick={() => setIsServicesOpen((v) => !v)}
+              className={`flex items-center gap-1 font-sans font-semibold text-sm transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer ${
+                isServices ? 'text-brand' : 'text-neutral-400 hover:text-white'
+              }`}
+              aria-expanded={isServicesOpen}
+              aria-haspopup="true"
             >
-              {item.label}
+              {tr.nav.services}
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
+              />
             </button>
-          ))}
+            {isServicesOpen && (
+              <div className="absolute top-full left-0 pt-3 w-64 animate-fade-in">
+                <div className="bg-neutral-950 border border-white/8 rounded-lg shadow-2xl shadow-black/60 p-2 flex flex-col">
+                  {tr.nav.servicesMenu.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsServicesOpen(false)}
+                      className={`px-3 py-2.5 rounded text-sm font-sans font-semibold transition-colors ${
+                        pathname === item.href
+                          ? 'bg-brand/10 text-brand'
+                          : 'text-neutral-300 hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/portfolio"
+            className={`font-sans font-semibold text-sm transition-all hover:scale-105 active:scale-95 duration-150 ${
+              isPortfolio ? 'text-brand' : 'text-neutral-400 hover:text-white'
+            }`}
+          >
+            {tr.nav.portfolio}
+          </Link>
+
+          <button
+            onClick={() => handleNavSelect('contact')}
+            className="font-sans font-semibold text-sm text-neutral-400 hover:text-white transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer"
+          >
+            {tr.nav.contact}
+          </button>
 
           <Link
             href="/blog"
@@ -168,19 +223,64 @@ export default function Header() {
           className="md:hidden absolute top-full left-0 right-0 bg-neutral-950 border-b border-white/8 py-6 px-6 shadow-2xl animate-fade-in"
         >
           <div className="flex flex-col space-y-4">
-            {[
-              { label: tr.nav.knowledge, id: 'about' },
-              { label: tr.nav.projects, id: 'projects' },
-              { label: tr.nav.contact, id: 'contact' },
-            ].map((item) => (
+            <button
+              onClick={() => handleNavSelect('about')}
+              className="text-left text-neutral-300 hover:text-white font-sans font-bold text-sm py-2 transition-colors border-b border-white/6"
+            >
+              {tr.nav.knowledge}
+            </button>
+
+            {/* Services accordion */}
+            <div className="border-b border-white/6">
               <button
-                key={item.id}
-                onClick={() => handleNavSelect(item.id)}
-                className="text-left text-neutral-300 hover:text-white font-sans font-bold text-sm py-2 transition-colors border-b border-white/6"
+                onClick={() => setIsMobileServicesOpen((v) => !v)}
+                className={`w-full text-left font-sans font-bold text-sm py-2 transition-colors flex justify-between items-center ${
+                  isServices ? 'text-brand' : 'text-neutral-300 hover:text-white'
+                }`}
+                aria-expanded={isMobileServicesOpen}
               >
-                {item.label}
+                <span>{tr.nav.services}</span>
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''}`}
+                />
               </button>
-            ))}
+              {isMobileServicesOpen && (
+                <div className="flex flex-col pb-2 pl-3 animate-fade-in">
+                  {tr.nav.servicesMenu.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`text-left font-sans font-semibold text-xs py-2 transition-colors ${
+                        pathname === item.href ? 'text-brand' : 'text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/portfolio"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-left font-sans font-bold text-sm py-2 transition-colors border-b border-white/6 flex justify-between items-center ${
+                isPortfolio ? 'text-brand' : 'text-neutral-300 hover:text-white'
+              }`}
+            >
+              <span>{tr.nav.portfolio}</span>
+              {isPortfolio && <span className="w-2 h-2 rounded-full bg-brand" />}
+            </Link>
+
+            <button
+              onClick={() => handleNavSelect('contact')}
+              className="text-left text-neutral-300 hover:text-white font-sans font-bold text-sm py-2 transition-colors border-b border-white/6"
+            >
+              {tr.nav.contact}
+            </button>
+
             <Link
               href="/blog"
               onClick={() => setIsMobileMenuOpen(false)}
