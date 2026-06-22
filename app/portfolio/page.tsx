@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { PROJECTS_DATA } from '../../src/data';
 
@@ -87,11 +88,17 @@ export default function PortfolioPage() {
                         className="group bg-neutral-900 border border-white/8 rounded overflow-hidden hover:border-brand/25 transition-all duration-300"
                       >
                         <div
-                          className={`h-40 bg-gradient-to-br ${project.thumbnailGradient} flex items-center justify-center`}
+                          className={`relative h-48 bg-gradient-to-br ${project.thumbnailGradient} overflow-hidden`}
                         >
-                          <span className="text-white/30 text-xs font-mono">
-                            {project.categoryLabel}
-                          </span>
+                          {project.thumbnailImage && (
+                            <Image
+                              src={project.thumbnailImage}
+                              alt={project.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          )}
                         </div>
                         <div className="p-6 space-y-3">
                           <div className="flex items-center justify-between">

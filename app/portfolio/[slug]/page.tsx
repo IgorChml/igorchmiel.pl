@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { ArrowLeft, ArrowRight, ExternalLink, Tag } from 'lucide-react';
 import { PROJECTS_DATA } from '../../../src/data';
 import type { Project } from '../../../src/types';
@@ -105,6 +106,24 @@ export default async function ProjectPage({
             </div>
           </div>
         </section>
+
+        {/* Hero Image */}
+        {project.thumbnailImage && (
+          <section className="pb-8">
+            <div className="max-w-5xl mx-auto px-6">
+              <div className={`relative aspect-[16/9] w-full rounded overflow-hidden border border-white/8 bg-gradient-to-br ${project.thumbnailGradient}`}>
+                <Image
+                  src={project.thumbnailImage}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Description */}
         <section className="pb-16 border-t border-white/5 relative">
