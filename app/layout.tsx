@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     url: 'https://igorchmiel.pl/',
     title: 'Igor Chmiel | Strony WWW i Marketing dla Małych Firm bez Agencji',
     description: 'Pomagam małym firmom i specjalistom budować strony internetowe i system marketingu, który generuje leady — bez udziału agencji. Web design, SEO, content marketing.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Igor Chmiel | Strony WWW i Marketing dla Małych Firm bez Agencji',
     description: 'Pomagam małym firmom i specjalistom budować strony internetowe i system marketingu, który generuje leady — bez udziału agencji.',
-    images: ['/og-image.png'],
+    images: ['/og-image.jpg'],
   },
   icons: {
     icon: '/logo-icon.png',

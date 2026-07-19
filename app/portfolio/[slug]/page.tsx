@@ -43,7 +43,7 @@ export async function generateMetadata({
       locale: 'pl_PL',
       images: project.thumbnailImage
         ? [{ url: project.thumbnailImage, width: 1200, height: 630 }]
-        : [{ url: '/og-image.png', width: 1200, height: 630 }],
+        : [{ url: '/og-image.jpg', width: 1200, height: 630 }],
     },
   };
 }

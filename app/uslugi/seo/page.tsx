@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     url: 'https://igorchmiel.pl/uslugi/seo',
     type: 'website',
     locale: 'pl_PL',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
 };
 
