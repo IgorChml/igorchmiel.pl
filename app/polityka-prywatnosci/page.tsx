@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     url: 'https://igorchmiel.pl/polityka-prywatnosci',
     type: 'website',
     locale: 'pl_PL',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
 };
 
