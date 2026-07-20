@@ -23,7 +23,9 @@ export const metadata: Metadata = {
     url: 'https://igorchmiel.pl/o-mnie',
     type: 'profile',
     locale: 'pl_PL',
-    images: [{ url: '/igor-hero.webp', width: 1200, height: 630 }],
+    // og-image.jpg is the hero photo pre-rendered as 1200×630 JPEG —
+    // igor-hero.webp is 800×500 WebP, which social scrapers reject.
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
 };
 

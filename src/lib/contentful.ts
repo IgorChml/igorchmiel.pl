@@ -98,6 +98,16 @@ function richTextToSummary(doc: RtDocument, maxLen = 220): string {
   return '';
 }
 
+// ── Open Graph image via Contentful Images API ──────────────────────
+// Social scrapers (Facebook, LinkedIn, WhatsApp) reject images that are
+// too large or lack fixed dimensions, falling back to the favicon.
+// This resizes/crops the raw asset to a 1200×630 progressive JPEG.
+export function contentfulOgImage(assetUrl: string): string {
+  if (!assetUrl) return '';
+  const sep = assetUrl.includes('?') ? '&' : '?';
+  return `${assetUrl}${sep}w=1200&h=630&fit=fill&f=center&fm=jpg&fl=progressive&q=80`;
+}
+
 function formatDate(iso: string): string {
   try {
     return new Date(iso).toLocaleDateString('pl-PL', {

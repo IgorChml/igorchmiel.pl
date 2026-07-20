@@ -24,6 +24,12 @@ export async function generateMetadata({
     return { title: 'Projekt nie znaleziony' };
   }
 
+  // Social scrapers (LinkedIn, X, WhatsApp) don't support WebP og:images,
+  // so each thumbnail has a pre-generated 1200×630 JPEG in /projects/og/.
+  const ogImage = project.thumbnailImage
+    ? project.thumbnailImage.replace('/projects/', '/projects/og/').replace('.webp', '.jpg')
+    : '/og-image.jpg';
+
   return {
     title: `${project.title} — Portfolio`,
     description: project.detailedDescription || project.description,
@@ -41,9 +47,16 @@ export async function generateMetadata({
       url: `https://igorchmiel.pl/portfolio/${project.id}`,
       type: 'website',
       locale: 'pl_PL',
-      images: project.thumbnailImage
-        ? [{ url: project.thumbnailImage, width: 1200, height: 630 }]
-        : [{ url: '/og-image.jpg', width: 1200, height: 630 }],
+      siteName: 'Igor Chmiel',
+      images: [
+        { url: ogImage, width: 1200, height: 630, type: 'image/jpeg', alt: project.title },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} | Portfolio — Igor Chmiel`,
+      description: project.detailedDescription || project.description,
+      images: [ogImage],
     },
   };
 }

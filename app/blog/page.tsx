@@ -16,6 +16,15 @@ export const metadata: Metadata = {
     title: 'Blog — Artykuły o Marketingu, SEO i Web Development',
     description: 'Praktyczne artykuły o content marketingu, SEO, budowaniu aplikacji SaaS i strategiach pozyskiwania klientów B2B.',
     url: '/blog',
+    siteName: 'Igor Chmiel',
+    locale: 'pl_PL',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog — Artykuły o Marketingu, SEO i Web Development',
+    description: 'Praktyczne artykuły o content marketingu, SEO, budowaniu aplikacji SaaS i strategiach pozyskiwania klientów B2B.',
+    images: ['/og-image.jpg'],
   },
 };
 

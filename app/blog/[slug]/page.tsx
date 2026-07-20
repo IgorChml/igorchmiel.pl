@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { getBlogPosts, getBlogPost } from '../../../src/lib/blog-server';
+import { contentfulOgImage } from '../../../src/lib/contentful';
 import { renderContent } from '../../../src/lib/renderContent';
 import { breadcrumbJsonLd, JsonLd } from '../../../src/lib/jsonld';
 import { translations } from '../../../src/lib/i18n';
@@ -26,6 +27,10 @@ export async function generateMetadata({
     return { title: 'Artykuł nie znaleziony' };
   }
 
+  const ogImage = post.imageUrl
+    ? contentfulOgImage(post.imageUrl)
+    : 'https://igorchmiel.pl/og-image.jpg';
+
   return {
     title: post.title,
     description: post.summary,
@@ -43,9 +48,23 @@ export async function generateMetadata({
       url: `/blog/${post.slug}`,
       type: 'article',
       locale: 'pl_PL',
-      images: post.imageUrl
-        ? [{ url: post.imageUrl }]
-        : [{ url: '/og-image.jpg', width: 1200, height: 630 }],
+      siteName: 'Igor Chmiel',
+      publishedTime: post.isoDate,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          type: 'image/jpeg',
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.summary,
+      images: [ogImage],
     },
   };
 }
