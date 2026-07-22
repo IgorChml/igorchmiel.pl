@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { getBlogPosts, getBlogPost } from '../../../src/lib/blog-server';
 import { contentfulOgImage } from '../../../src/lib/contentful';
@@ -75,6 +75,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   if (!post) {
     notFound();
+  }
+
+  // Old URLs used the Contentful entry id — 301 them to the title slug
+  if (slug !== post.slug) {
+    permanentRedirect(`/blog/${post.slug}`);
   }
 
   const tr = translations.pl;

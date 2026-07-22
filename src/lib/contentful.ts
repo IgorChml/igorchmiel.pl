@@ -108,6 +108,22 @@ export function contentfulOgImage(assetUrl: string): string {
   return `${assetUrl}${sep}w=1200&h=630&fit=fill&f=center&fm=jpg&fl=progressive&q=80`;
 }
 
+// ── SEO-friendly slug from a post title ─────────────────────────────
+// "Jak AI zmienia SEO? 5 trendów!" → "jak-ai-zmienia-seo-5-trendow"
+export function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    // ł/Ł survive NFD normalization, so map them explicitly
+    .replace(/ł/g, 'l')
+    // decompose accented chars (ą→a+ogonek) and drop the combining marks
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    // punctuation and symbols → space, so "SEO?5" doesn't glue into "seo5"
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
 function formatDate(iso: string): string {
   try {
     return new Date(iso).toLocaleDateString('pl-PL', {
@@ -132,15 +148,24 @@ export function parseEntries(data: any): BlogPost[] {
     if (url) assetMap[asset.sys.id] = url.startsWith('//') ? `https:${url}` : url;
   }
 
+  const seenSlugs = new Set<string>();
+
   return items.map((item): BlogPost => {
     const f        = item.fields;
     const markdown = f.body ? richTextToMarkdown(f.body as RtDocument, assetMap) : '';
     const summary  = f.body ? richTextToSummary(f.body  as RtDocument) : '';
     const imageId  = f.image?.sys?.id;
 
+    // Prefer an editor-defined slug field; otherwise derive one from the
+    // title. Fall back to sys.id for untitled posts, and disambiguate
+    // duplicate titles with the entry id so lookups stay unambiguous.
+    let slug = (f.slug as string) || slugify(f.title ?? '') || item.sys.id;
+    if (seenSlugs.has(slug)) slug = `${slug}-${item.sys.id.slice(0, 6).toLowerCase()}`;
+    seenSlugs.add(slug);
+
     return {
       id:            item.sys.id,
-      slug:          item.sys.id,
+      slug,
       title:         f.title ?? 'Bez tytułu',
       summary,
       content:       markdown,
