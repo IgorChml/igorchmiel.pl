@@ -40,7 +40,7 @@ export const PROJECTS_DATA: Project[] = [
     tags: ['Strona firmowa', 'Lead Generation', 'Google API', 'Kalkulator', 'SEO lokalne'],
     localVideo: '/videos/cml-klimatyzacje.mp4',
     fallbackVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', // clean cooling fan / modern interior breeze
-    siteUrl: 'https://cml-klimatyzacje.vercel.app',
+    siteUrl: 'https://cmlklimatyzacje.pl',
     features: [
       'Dedykowany wielokrokowy konfigurator/formularz wyceny usług',
       'Integracja i filtrowanie rzeczywistych opinii klientów z Profilu Google',
@@ -109,7 +109,7 @@ export const PROJECTS_DATA: Project[] = [
     tags: ['SaaS', 'AI / LLM', 'React', 'Node.js', 'Wyszukiwanie semantyczne', 'Zarządzanie dokumentami'],
     localVideo: '',
     fallbackVideo: '',
-    siteUrl: 'https://docbase-smoky.vercel.app',
+    siteUrl: 'https://www.docbase.com.pl',
     features: [
       'Portal klienta do przesyłania i zarządzania dokumentami projektowymi',
       'AI Chat — przeszukiwanie całej bazy wiedzy w języku naturalnym',
