@@ -8,3 +8,173 @@
   --color-brand-dark: #d4981e;
   --color-brand-light: rgba(255, 182, 39, 0.1);
 }
+
+/* ───────────────────────── Liquid glass ─────────────────────────
+   Powierzchnie szklane (karty usług i sekcja kontaktu).
+   Wymagają kolorowego tła za sobą (plamy światła w sekcjach). */
+
+.glass {
+  position: relative;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.025) 50%, rgba(255, 255, 255, 0.05) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 28px 56px -20px rgba(0, 0, 0, 0.7);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+/* cienka, "załamana" krawędź: jasna u góry, bursztynowa u dołu */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0.04) 32%,
+    rgba(255, 255, 255, 0) 62%,
+    rgba(255, 182, 39, 0.3) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* światło podążające za kursorem (pozycję ustawia onMouseMove) */
+.glass-spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(255, 182, 39, 0.16),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.glass-spot:hover::after {
+  opacity: 1;
+}
+.glass-spot:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 32px 64px -20px rgba(0, 0, 0, 0.75),
+    0 0 48px -12px rgba(255, 182, 39, 0.22);
+}
+
+/* wpuszczone pola w szklanym panelu (wiersze kontaktu) */
+.glass-inset {
+  border-radius: 0.875rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.glass-inset:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 182, 39, 0.3);
+}
+
+/* kafelek z ikoną */
+.glass-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  color: var(--color-brand);
+  background: linear-gradient(145deg, rgba(255, 182, 39, 0.22), rgba(255, 182, 39, 0.06));
+  border: 1px solid rgba(255, 182, 39, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 8px 20px -8px rgba(255, 182, 39, 0.45);
+}
+
+/* pola formularza */
+.glass-field {
+  width: 100%;
+  border-radius: 0.875rem;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: #f5f5f5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.glass-field::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+.glass-field:focus {
+  outline: none;
+  background: rgba(0, 0, 0, 0.42);
+  border-color: rgba(255, 182, 39, 0.55);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.35),
+    0 0 0 4px rgba(255, 182, 39, 0.12);
+}
+
+/* przycisk główny: bursztynowe, wypukłe szkło */
+.btn-glass-amber {
+  position: relative;
+  border-radius: 0.875rem;
+  color: #1a1204;
+  background: linear-gradient(180deg, #ffcb52 0%, #ffb627 55%, #f0a512 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+    0 10px 28px -8px rgba(255, 182, 39, 0.55);
+  transition: filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-glass-amber:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+    0 14px 34px -8px rgba(255, 182, 39, 0.7);
+}
+.btn-glass-amber:active:not(:disabled) {
+  transform: scale(0.985);
+}
+.btn-glass-amber:focus-visible {
+  outline: 2px solid rgba(255, 182, 39, 0.9);
+  outline-offset: 3px;
+}
+
+/* plakietka sekcji */
+.glass-pill {
+  border-radius: 9999px;
+  background: rgba(255, 182, 39, 0.08);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 182, 39, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* przeglądarki bez backdrop-filter: pełniejsze, nieprzezroczyste tło */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: linear-gradient(145deg, #1d1d1d, #141414);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass,
+  .glass-spot::after,
+  .glass-inset,
+  .glass-field,
+  .btn-glass-amber {
+    transition: none;
+  }
+}
