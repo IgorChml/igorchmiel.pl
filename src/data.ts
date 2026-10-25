@@ -12,7 +12,7 @@ export const PROJECTS_DATA: Project[] = [
     client: 'KociBaits',
     category: 'ecommerce',
     categoryLabel: 'E-commerce',
-    description: 'Responsywna strona e-commerce z systemem płatności i zarządzaniem zamówieniami dedykowana dla wędkarzy karpiowych. Efekt: wzrost konwersji o 45%.',
+    description: 'Responsywna strona e-commerce z systemem płatności i zarządzaniem zamówieniami dedykowana dla wędkarzy karpiowych. Efekt: Obsługa zamówień poprzez CMS oraz wzrost konwersji.',
     detailedDescription: 'Nowoczesny sklep internetowy stworzony dla renomowanej marki zanęt karpiowych KociBaits. Projekt opiera się na szybkim systemie zakupowym, intuicyjnej nawigacji i elastycznych filtrach wyszukiwania produktów. Wdrożono bezpieczne płatności online oraz automatyczną obsługę procesów magazynowych i logistycznych. Wynik: wzrost współczynnika konwersji o 45% po wdrożeniu nowego sklepu.',
     tags: ['E-commerce', 'WooCommerce', 'Płatności Online', 'UX/UI', 'RWD'],
     localVideo: '/videos/kocibaits.mp4',
