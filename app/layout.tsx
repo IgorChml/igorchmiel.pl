@@ -7,10 +7,10 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://igorchmiel.pl'),
   title: {
-    default: 'Igor Chmiel | Strony WWW i Marketing dla Małych Firm bez Agencji',
+    default: 'Igor Chmiel | Marketing dla małych i średnich biznesów',
     template: '%s | Igor Chmiel',
   },
-  description: 'Pomagam małym firmom i specjalistom budować strony internetowe i system marketingu, który generuje leady — bez udziału agencji. Web design, SEO, content marketing.',
+  description: 'Pomagam małym firmom i specjalistom budować strony internetowe oraz marketing, który widać w przychodzie. Web design, SEO, treści i strategia.',
   alternates: {
     canonical: 'https://igorchmiel.pl/',
     languages: {
