@@ -14,7 +14,7 @@ export const PROJECTS_DATA: Project[] = [
     categoryLabel: 'E-commerce',
     description: 'Responsywna strona e-commerce z systemem płatności i zarządzaniem zamówieniami dedykowana dla wędkarzy karpiowych. Efekt: Obsługa zamówień poprzez CMS oraz wzrost konwersji.',
     detailedDescription: 'Nowoczesny sklep internetowy stworzony dla renomowanej marki zanęt karpiowych KociBaits. Projekt opiera się na szybkim systemie zakupowym, intuicyjnej nawigacji i elastycznych filtrach wyszukiwania produktów. Wdrożono bezpieczne płatności online oraz automatyczną obsługę procesów magazynowych i logistycznych. Wynik: wzrost współczynnika konwersji o 45% po wdrożeniu nowego sklepu.',
-    tags: ['E-commerce', 'WooCommerce', 'Płatności Online', 'UX/UI', 'RWD'],
+    tags: ['E-commerce', 'WooCommerce', 'Płatności Online', 'UX/UI', 'Branding'],
     localVideo: '/videos/kocibaits.mp4',
     fallbackVideo: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', // beautiful water/lake fishing vibe
     siteUrl: 'https://www.kocibaits.pl',
@@ -27,7 +27,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     thumbnailGradient: 'from-amber-950 to-emerald-950',
     thumbnailImage: '/projects/kocibaits.webp',
-    completedYear: 2024
+    completedYear: 2026
   },
   {
     id: 'cml-klimatyzacje',
@@ -50,7 +50,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     thumbnailGradient: 'from-blue-950 to-cyan-950',
     thumbnailImage: '/projects/cml-klimatyzacje.webp',
-    completedYear: 2025
+    completedYear: 2023
   },
   {
     id: 'artwall-design',
@@ -73,7 +73,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     thumbnailGradient: 'from-purple-950 to-pink-950',
     thumbnailImage: '/projects/artwall-design.webp',
-    completedYear: 2025
+    completedYear: 2024
   },
   {
     id: 'igorchmiel-portfolio',
@@ -96,7 +96,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     thumbnailGradient: 'from-slate-950 to-slate-800',
     thumbnailImage: '/projects/igorchmiel.webp',
-    completedYear: 2026
+    completedYear: 2025
   },
   {
     id: 'docbase-saas',
