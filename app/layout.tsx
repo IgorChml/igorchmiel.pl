@@ -85,7 +85,7 @@ const jsonLd = {
       image: 'https://igorchmiel.pl/igor-hero.webp',
       logo: 'https://igorchmiel.pl/logo.png',
       email: 'kontakt@igorchmiel.pl',
-      taxID: '7831897775',
+      taxID: '',
       priceRange: 'od 200 PLN',
       currenciesAccepted: 'PLN',
       address: {
