@@ -54,7 +54,7 @@ const jsonLd = {
       mainEntityOfPage: 'https://igorchmiel.pl/o-mnie',
       image: 'https://igorchmiel.pl/igor-hero.webp',
       email: 'kontakt@igorchmiel.pl',
-      taxID: '7831897775',
+      taxID: '',
       jobTitle: 'Marketing Manager i Konsultant B2B',
       description: 'Marketing Manager, programista i niezależny konsultant biznesowy. Specjalizacja: content marketing, B2B, techniczne SEO, SaaS, web development.',
       knowsLanguage: ['pl', 'en'],
